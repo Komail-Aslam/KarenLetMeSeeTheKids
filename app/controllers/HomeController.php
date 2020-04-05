@@ -19,13 +19,14 @@ class HomeController extends Controller
 		   	if($user!=null && password_verify($password, $user->password_hash)){
 
 		   		$_SESSION['user_id'] = $user->user_id;
-//		     	echo "You should be logged in!";
+		     	echo "You should be logged in!";
 
 		     	header('location:/Home/Secure');
 		   	}
 		    else{
 		    	//provide an error message
-
+		    	$_SESSION["error"] = "Wrong username or password!";
+		    	$this->view('home/login');
 		    }
 	   	}else{
 	       	$this->view('home/login');
