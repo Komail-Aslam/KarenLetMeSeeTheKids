@@ -6,8 +6,8 @@
 	<table><tr><th>username</th><th>password_hash</th></tr>
 
 	<?php 
-	foreach($data["users"] as $user){
-		echo "<tr><td>$user->username</td><td>$user->password_hash</td></tr>";
+	foreach($data["profiles"] as $profile){
+		echo "<tr><td>$profile->first_name</td><td>$profile->last_name</td></tr>";
 	}
 	?>
 </table>
