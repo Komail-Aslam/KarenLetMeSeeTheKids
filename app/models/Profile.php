@@ -34,6 +34,14 @@
         return $stmt->fetch();
     }
 
+    function update(){
+        $sql = 'UPDATE profile SET first_name = :first_name, last_name = :last_name, email = :email, city = :city, country = :country WHERE profile_id = :profile_id';
+        $stmt = self::$_connection->prepare($sql);
+        $stmt->execute(['profile_id'=>$this->profile_id, 'first_name'=>$this->first_name,'last_name'=>$this->last_name, 'email'=>$this->email, 'city'=>$this->city, 'country'=>$this->country]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Profile');
+        return $stmt->rowCount();
+    }
+
 	}
 
 ?>

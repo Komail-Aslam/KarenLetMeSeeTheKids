@@ -1,5 +1,5 @@
 <html>
-<head><title>person index</title>
+<head><title>Register</title>
 </head>
 <body style="background-color: violet">
 	<center><h1>Karen Let Me See The Kids</h1></center>

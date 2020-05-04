@@ -23,8 +23,10 @@ class HomeController extends Controller
 		   		$profile = $this->model('Profile')->currentProfile($_SESSION['user_id']);
 		   		if ($profile == null)
 		     		header('location:/Home/Welcome');
-		     	else
+		     	else {
+		     		$_SESSION['profile_id'] = $profile->profile_id;
 		     		header('location:/Home/homepage');
+		     	}
 		   	}
 		    else{
 		    	//provide an error message
@@ -39,7 +41,8 @@ class HomeController extends Controller
     public function Welcome(){
     	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
     		return header('location:/Home/Login');
-    	//echo "This is secure!<a href='/Home/Logout'>Logout!!</a>";
+    	if(isset($_SESSION['profile_id']))
+    		return header('location:/Home/homepage');
     	
     	$id = $_SESSION['user_id'];
     	
@@ -68,8 +71,9 @@ class HomeController extends Controller
 	       		$profile->city = $city;
 	       		$profile->country = $country;
 	       		$profile->insert();
+	       		$_SESSION['profile_id'] = $profile->profile_id;
 		        $profiles = $profile->All();
-		        //$this->view('home/clientProfileCreate', ['profiles' => $profiles]);
+		        
 		        if ($_POST['clientOrProfessional'] == 'client')
 		        	header('location:/Home/clientProfileCreate');
 		        else
@@ -111,6 +115,9 @@ class HomeController extends Controller
     }
 
     public function clientProfileCreate(){
+    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
+    		return header('location:/Home/Login');
+
     	$profile = $this->model('Profile');
     	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
     	$this->view('home/clientProfileCreate', $currentProfile);
@@ -127,7 +134,46 @@ class HomeController extends Controller
     }
 
     public function homepage(){
-    	$this->view('home/homepage');
+    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
+    		return header('location:/Home/Login');
+
+    	$profile = $this->model('Profile');
+    	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
+
+    	$this->view('home/homepage', $currentProfile);
+    }
+
+    public function modifyProfile(){
+    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
+    		return header('location:/Home/Login');
+    	$profile = $this->model('Profile');
+    	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
+		$this->view('home/modifyProfile', $currentProfile);
+
+		if (isset($_POST['action'])){
+			$profile = $this->model('profile');
+			$profile->profile_id = $_SESSION['profile_id'];
+			$profile->user_id = $_SESSION['user_id'];
+			$profile->first_name = $_POST['first_name'];
+       		$profile->last_name = $_POST['last_name'];
+       		$profile->email = $_POST['email'];
+       		$profile->city = $_POST['city'];
+       		$profile->country = $_POST['country'];
+       		$profile->update();
+       		header('location:/Home/homepage');
+		}
+
+
+    }
+
+    public function viewMessages(){
+    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
+    		return header('location:/Home/Login');
+    	$profile = $this->model('Profile');
+    	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
+		$this->view('home/viewMessages', $currentProfile);
+
+		
     }
 }
 

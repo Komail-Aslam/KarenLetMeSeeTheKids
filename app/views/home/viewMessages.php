@@ -9,9 +9,9 @@
 		
 	<div class="main" style="background-color: lightblue">
 		<div class="topnav">
-			<a class="active" href="/Home/Homepage">Home</a>
+			<a href="/Home/Homepage">Home</a>
 			<a href="/Home/ModifyProfile">Profile</a>
-			<a href="/Home/ViewMessages">Messages</a>
+			<a class="active" href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<a href="/Home/ModifyProfile">Professionals</a>
 			<a href="/Home/ModifyProfile">Logbook</a>

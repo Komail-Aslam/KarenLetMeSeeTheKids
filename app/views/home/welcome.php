@@ -4,6 +4,7 @@
 	</head>
 
 	<body style="background-color: violet">
+		<a href='/Home/Logout'>Logout</a>
 		<center><h1>Welcome To KarenLetMeSeeTheKids</h1></center>
 	<div style="background-color: lightblue">
 		<center><h2>Please enter the following details to create your profile.</h2>
@@ -54,6 +55,12 @@
 		text-align: right;
 		margin-right: auto;
 		width: 70%;
+	}
+	a {
+		float: right;
+		margin-top: 10px;
+		margin-right: 10px;
+		font-size: 20px;
 	}
 </style>
 <?php

@@ -9,18 +9,32 @@
 		
 	<div class="main" style="background-color: lightblue">
 		<div class="topnav">
-			<a class="active" href="/Home/Homepage">Home</a>
-			<a href="/Home/ModifyProfile">Profile</a>
+			<a href="/Home/Homepage">Home</a>
+			<a class="active" href="#profile">Profile</a>
 			<a href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<a href="/Home/ModifyProfile">Professionals</a>
 			<a href="/Home/ModifyProfile">Logbook</a>
 		</div>
+		
+		<form action="" method="post">
+			<ul>First Name: <input type="text" name="first_name" value="<?php echo$data->first_name?>"></ul>
+			<ul>Last Name: <input type="text" name="last_name" value="<?php echo$data->last_name?>"></ul>
+			<ul>Email: <input type="text" name="email" value="<?php echo$data->email?>"></ul>
+			<ul>City: <input type="text" name="city" value="<?php echo$data->city?>"></ul>
+			<ul>Country: <input type="text" name="country" value="<?php echo$data->country?>"></ul>
+			<input type="submit" name="action" value="Save" style="margin-left: 75%;">
+		</form>
 	</div>
 	</body>
 </html>
 
 <style type="text/css">
+	input[type=text] {
+	    border: 1px solid black;
+	    border-radius: 3px;
+	    padding: 6px 20px;
+	}
 	.main {
 		padding: 60px 80px;
 		width: 70%;
@@ -63,5 +77,12 @@
 	.topnav a.active {
 	    background-color: violet;
 	    color: black;
+	}
+	ul {
+		text-align: right;
+	}
+	form {
+		margin-top: 70px;
+		margin-right: 40%;
 	}
 </style>
