@@ -2,6 +2,8 @@
 
 class HomeController extends Controller
 {
+	public $mainProfile;
+
     public function index($name = '')
     {
        $profile = $this->model('Profile');
@@ -17,10 +19,12 @@ class HomeController extends Controller
 		   	$password = $_POST['password'];
 		   	$user = $this->model('User')->getUser($username);
 		   	if($user!=null && password_verify($password, $user->password_hash)){
-
 		   		$_SESSION['user_id'] = $user->user_id;
-		     	
-		     	header('location:/Home/Welcome');
+		   		$profile = $this->model('Profile')->currentProfile($_SESSION['user_id']);
+		   		if ($profile == null)
+		     		header('location:/Home/Welcome');
+		     	else
+		     		header('location:/Home/homepage');
 		   	}
 		    else{
 		    	//provide an error message
@@ -66,7 +70,10 @@ class HomeController extends Controller
 	       		$profile->insert();
 		        $profiles = $profile->All();
 		        //$this->view('home/clientProfileCreate', ['profiles' => $profiles]);
-		        header('location:/Home/clientProfileCreate');
+		        if ($_POST['clientOrProfessional'] == 'client')
+		        	header('location:/Home/clientProfileCreate');
+		        else
+		        	header('location:/Home/professionalProfileCreate');
 	       	}
 	    }
 	    else{
@@ -105,7 +112,22 @@ class HomeController extends Controller
 
     public function clientProfileCreate(){
     	$profile = $this->model('Profile');
-    	$this->view('home/clientProfileCreate',  ('profile' => $profile);
+    	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
+    	$this->view('home/clientProfileCreate', $currentProfile);
+
+    	if (isset($_POST['action'])){
+    		//if (isset($_POST['professionl_type'])){
+	    		$client = $this->model('Client');
+	    		$client->profile_id = $currentProfile->profile_id;
+	    		$client->professional_type = $_POST['professional_type'];
+	    		$client->insert();
+	    		header('location:/Home/homepage');
+	    	//}
+    	}
+    }
+
+    public function homepage(){
+    	$this->view('home/homepage');
     }
 }
 

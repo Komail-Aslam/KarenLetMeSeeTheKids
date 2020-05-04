@@ -8,15 +8,17 @@
 	<div style="background-color: lightblue">
 
 		<?php 
-				
-			echo "<tr><td>$profile->first_name</td><td>$profile->last_name</td></tr>";
+		echo "<center><h2>Welcome $data->first_name, please answer the following question to finish creating your profile.</h2>";
+			//echo var_dump();
+			//echo "<tr><td>$profile->first_name</td><td>$profile->last_name</td></tr>";
 			
 		?>
 
-		<center><h2>Welcome enter the following details to create your profile.</h2>
 		<form action="" method="post">
-			<ul>First Name: <input type="text" name="first_name"></ul>
-			<ul>Last Name: <input type="text" name="last_name"></ul>
+			What type of professional are you looking for? <br> 
+			Psychologist: <input type="radio" name="professional_type" value="psychologist">
+			Psychiatrist: <input type="radio" name="professional_type" value="psychiatrist">
+			Child Therapist: <input type="radio" name="professional_type" value="child_therapist">
 
 			<br /><br>
 			<input type="submit" name="action" value="Proceed">
@@ -55,7 +57,7 @@
 	ul {
 		text-align: right;
 		margin-right: auto;
-		width: 70%;
+		width: 80%;
 	}
 </style>
 <?php
