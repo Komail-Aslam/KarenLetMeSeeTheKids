@@ -123,14 +123,20 @@ class HomeController extends Controller
     	$this->view('home/clientProfileCreate', $currentProfile);
 
     	if (isset($_POST['action'])){
-    		//if (isset($_POST['professionl_type'])){
+    		if (!isset($_POST['professional_type'])){
+    			$_SESSION["error"] = "Please select one of the options.";
+	    		$this->view('home/clientProfileCreate', $currentProfile);
+	    	}
+	    	else {
 	    		$client = $this->model('Client');
 	    		$client->profile_id = $currentProfile->profile_id;
 	    		$client->professional_type = $_POST['professional_type'];
 	    		$client->insert();
 	    		header('location:/Home/homepage');
-	    	//}
+	    	}
     	}
+    	else
+    		$this->view('home/clientProfileCreate', $currentProfile);
     }
 
     public function homepage(){
@@ -171,9 +177,24 @@ class HomeController extends Controller
     		return header('location:/Home/Login');
     	$profile = $this->model('Profile');
     	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
-		$this->view('home/viewMessages', $currentProfile);
 
-		
+    	$message = $this->model('Messages');
+    	$messages = $message->viewMessages($currentProfile->profile_id);
+
+		$this->view('home/viewMessages', ['messages' => $messages]);
+    }
+
+    public function createMessage(){
+
+    	if (isset($_POST['search'])){
+    		$search = $_POST['receiver'];
+    		$profile = $this->model('Profile');
+    		$profiles = $profile->search($search);
+    		$this->view('home/createMessage', ['profiles' => $profiles]);
+    	}
+    	else {
+			$this->view('home/createMessage');
+    	}
     }
 }
 

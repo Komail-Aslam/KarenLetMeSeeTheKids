@@ -9,8 +9,6 @@
 
 		<?php 
 		echo "<center><h2>Welcome $data->first_name, please answer the following question to finish creating your profile.</h2>";
-			//echo var_dump();
-			//echo "<tr><td>$profile->first_name</td><td>$profile->last_name</td></tr>";
 			
 		?>
 
@@ -32,7 +30,7 @@
 	</center>
 	</div>
 	</body>
-</html>
+
 
 <style type="text/css">
 	div {
@@ -60,6 +58,7 @@
 		width: 80%;
 	}
 </style>
+</html>
 <?php
 	unset($_SESSION["error"]);
 ?>

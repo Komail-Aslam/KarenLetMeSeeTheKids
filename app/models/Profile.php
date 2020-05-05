@@ -42,6 +42,14 @@
         return $stmt->rowCount();
     }
 
+    function search($search){
+        //return all records
+        $sql = 'SELECT * FROM Profile WHERE first_name LIKE :search OR last_name LIKE :search';
+        $stmt = self::$_connection->prepare($sql);
+        $stmt->execute(['search'=>$search]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Profile');
+        return $stmt->fetchAll();
+    }
 	}
 
 ?>

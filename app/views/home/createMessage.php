@@ -16,9 +16,20 @@
 			<a href="/Home/ModifyProfile">Professionals</a>
 			<a href="/Home/ModifyProfile">Logbook</a>
 		</div>
-		<form action="/Home/CreateMessage" method="get">
-			<input type="submit" name="Submit" value="Compose">
+		<h2>Who would you like to message?</h2>
+		<form action='' method="post">
+			<form action="" method="post">
+				<ul>Send to: <input type='text' name='receiver' /></ul>
+				<input type="submit" name="search" value="Search">
+			</form>
 		</form>
+		<?php
+			if ($data != null){
+				foreach($data["profiles"] as $profile){
+					echo "<a class='serches' href='/Home/ModifyProfile'>$profile->first_name $profile->last_name </a><br>";
+				}
+			}
+		?>
 	</div>
 	</body>
 </html>
@@ -34,9 +45,7 @@
 		
 	}
 	a {
-		float: right;
 		margin-top: 10px;
-		margin-right: 10px;
 		font-size: 20px;
 	}
 	h1 {
