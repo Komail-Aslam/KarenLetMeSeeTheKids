@@ -181,7 +181,13 @@ class HomeController extends Controller
     	$message = $this->model('Messages');
     	$messages = $message->viewMessages($currentProfile->user_id);
 
+    	
+
 		$this->view('home/viewMessages', ['messages' => $messages]);
+
+		// foreach($messages as $messages){
+			
+		// }
     }
 
     public function createMessage(){
