@@ -10,31 +10,27 @@
 	<div class="main" style="background-color: lightblue">
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
-			<a class="active" href="#profile">Profile</a>
-			<a href="/Home/ViewMessages">Messages</a>
+			<a href="/Home/ModifyProfile">Profile</a>
+			<a class="active" href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<a href="/Home/ModifyProfile">Professionals</a>
 			<a href="/Home/ModifyProfile">Logbook</a>
 		</div>
-		
+
+		<?php
+			echo "<p style='padding-top: 50px'>Send to: $data->first_name $data->last_name</p>";
+		?>
+
 		<form action="" method="post">
-			<ul>First Name: <input type="text" name="first_name" value="<?php echo$data->first_name?>"></ul>
-			<ul>Last Name: <input type="text" name="last_name" value="<?php echo$data->last_name?>"></ul>
-			<ul>Email: <input type="text" name="email" value="<?php echo$data->email?>"></ul>
-			<ul>City: <input type="text" name="city" value="<?php echo$data->city?>"></ul>
-			<ul>Country: <input type="text" name="country" value="<?php echo$data->country?>"></ul>
-			<input type="submit" name="action" value="Save" style="margin-left: 75%;">
+			Message: <input type="text" name="message"><br><br>
+			<input type="submit" name="send_message" value="Send Message">
 		</form>
+
 	</div>
 	</body>
 </html>
 
 <style type="text/css">
-	input[type=text] {
-	    border: 1px solid black;
-	    border-radius: 3px;
-	    padding: 6px 20px;
-	}
 	.main {
 		padding: 60px 80px;
 		width: 70%;
@@ -78,12 +74,5 @@
 	    background-color: violet;
 	    border-style: solid;
 	    color: black;
-	}
-	ul {
-		text-align: right;
-	}
-	form {
-		margin-top: 70px;
-		margin-right: 40%;
 	}
 </style>

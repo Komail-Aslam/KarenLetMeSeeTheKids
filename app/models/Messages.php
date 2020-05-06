@@ -7,17 +7,17 @@
 		public $receiver;
 
 		function insert(){
-        	$sql = 'INSERT INTO Messages(message, sender, receiver) VALUES(:message, :sender, :receiver)';
+        	$sql = 'INSERT INTO Message(message, sender, receiver) VALUES(:message, :sender, :receiver)';
             $stmt = self::$_connection->prepare($sql);
             $stmt->execute(['message'=>$this->message, 'sender'=>$this->sender, 'receiver'=>$this->receiver]);
             return self::$_connection->lastInsertId();
         }
 
-        function viewMessages($profile_id){
-        	$sql = 'SELECT * FROM Messages WHERE receiver = :profile_id';
+        function viewMessages($user_id){
+        	$sql = 'SELECT * FROM Message WHERE receiver = :user_id';
 	        $stmt = self::$_connection->prepare($sql);
-	        $stmt->execute(['profile_id'=>$profile_id]);
-	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Messages');
+	        $stmt->execute(['user_id'=>$user_id]);
+	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Message');
 	        return $stmt->fetchAll();
         }
 

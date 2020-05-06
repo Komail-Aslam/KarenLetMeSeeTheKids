@@ -62,6 +62,7 @@
 	}
 	.topnav a.active {
 	    background-color: violet;
+	    border-style: solid;
 	    color: black;
 	}
 </style>

@@ -179,7 +179,7 @@ class HomeController extends Controller
     	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
 
     	$message = $this->model('Messages');
-    	$messages = $message->viewMessages($currentProfile->profile_id);
+    	$messages = $message->viewMessages($currentProfile->user_id);
 
 		$this->view('home/viewMessages', ['messages' => $messages]);
     }
@@ -188,12 +188,36 @@ class HomeController extends Controller
 
     	if (isset($_POST['search'])){
     		$search = $_POST['receiver'];
-    		$profile = $this->model('Profile');
-    		$profiles = $profile->search($search);
+	    	$profile = $this->model('Profile');
+	   		$profiles = $profile->search($search);
     		$this->view('home/createMessage', ['profiles' => $profiles]);
+    	}
+    	else if (isset($_POST['proceed'])){
+    		if (!isset($_POST['search_select'])){
+    			$_SESSION['error'] = "Please select someone to send the message to.";
+				$this->view('home/createMessage');
+			}
+			else {
+			   	$_SESSION['receiver'] = $_POST['search_select'];
+		    	return header('location:/Home/writeMessage');
+			}
     	}
     	else {
 			$this->view('home/createMessage');
+    	}
+    }
+
+    public function writeMessage(){
+    	$profile = $this->model('Profile');
+		$receiver = $profile->currentProfile($_SESSION['receiver']);
+    	$this->view('home/writeMessage', $receiver);
+    	if (isset($_POST['send_message'])){
+    		$message = $this->model('Messages');
+    		$message->sender = $_SESSION['user_id'];
+    		$message->receiver = $_SESSION['receiver'];
+    		$message->message = $_POST['message'];
+    		$message->insert();
+    		return header('location:/Home/viewMessages');
     	}
     }
 }

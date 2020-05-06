@@ -19,11 +19,19 @@
 		<form action="/Home/CreateMessage" method="get">
 			<input type="submit" name="Submit" value="Compose">
 		</form>
+		<?php
+			foreach($data["messages"] as $messages){
+				echo "<td><tr style='padding-right: 10px;'>$messages[1]</tr></td> ";
+			}
+		?>
 	</div>
 	</body>
 </html>
 
 <style type="text/css">
+	tr {
+		
+	}
 	.main {
 		padding: 60px 80px;
 		width: 70%;
@@ -65,6 +73,7 @@
 	}
 	.topnav a.active {
 	    background-color: violet;
+	    border-style: solid;
 	    color: black;
 	}
 </style>

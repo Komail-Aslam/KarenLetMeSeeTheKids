@@ -4,7 +4,7 @@
 	</head>
 
 	<body style="background-color: violet">
-		<a href='/Home/Logout'>Logout</a>
+		<a class="logout" href='/Home/Logout'>Logout</a>
 		<h1>KarenLetMeSeeTheKids</h1>
 		
 	<div class="main" style="background-color: lightblue">
@@ -15,24 +15,39 @@
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<a href="/Home/ModifyProfile">Professionals</a>
 			<a href="/Home/ModifyProfile">Logbook</a>
+			<a href='/Home/Logout'>Logout</a>
 		</div>
 		<h2>Who would you like to message?</h2>
-		<form action='' method="post">
 			<form action="" method="post">
 				<ul>Send to: <input type='text' name='receiver' /></ul>
 				<input type="submit" name="search" value="Search">
 			</form>
+			<form action="" method="post">
+				<?php
+					if ($data != null){
+						foreach($data["profiles"] as $profile){
+							echo "$profile->first_name $profile->last_name<input type='radio' name='search_select' value=$profile->user_id>";
+						}
+					}
+				?>
+				<br /><br />
+				<input type="submit" name="proceed" value="Write Message">
 		</form>
+
 		<?php
-			if ($data != null){
-				foreach($data["profiles"] as $profile){
-					echo "<a class='serches' href='/Home/ModifyProfile'>$profile->first_name $profile->last_name </a><br>";
+			if (isset($_SESSION['error'])){
+					$error = $_SESSION['error'];
+					echo "<p>$error</p>";
 				}
-			}
 		?>
+		
 	</div>
 	</body>
 </html>
+
+<?php
+	unset($_SESSION["error"]);
+?>
 
 <style type="text/css">
 	.main {
@@ -45,9 +60,11 @@
 		
 	}
 	a {
+		float: right;
 		margin-top: 10px;
 		font-size: 20px;
 	}
+	
 	h1 {
 		font-size:40px;
 		padding-top: 30px;
@@ -74,6 +91,7 @@
 	}
 	.topnav a.active {
 	    background-color: violet;
+	    border-style: solid;
 	    color: black;
 	}
 </style>
