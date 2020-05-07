@@ -14,10 +14,10 @@
             return self::$_connection->lastInsertId();
         }
 
-        function viewComments(){
-        	$sql = 'SELECT * FROM Comments';
+        function viewComments($post_id){
+        	$sql = 'SELECT * FROM Comments WHERE post_id = :post_id';
 	        $stmt = self::$_connection->prepare($sql);
-	        $stmt->execute();
+	        $stmt->execute(['post_id'=>$post_id]);
 	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Comments');
 	        return $stmt->fetchAll();
         }

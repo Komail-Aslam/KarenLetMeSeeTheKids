@@ -18,12 +18,17 @@
 		</div>
 
 		<?php
-			echo "<p style='padding-top: 50px'><b>Post:</b> $data->post_content</p>";
+			$client = $this->model('Client');
+			$poster = $client->getClientClientId($data->client_id);
+			$profile = $this->model('Profile');
+			$poster = $profile->currentProfileProfileId($poster->profile_id);
+
+			echo "<b>Poster:</b> $poster->first_name $poster->last_name<br><b>Post:</b> $data->post_content";
 		?>
 
 		<form action="" method="post">
-			Message: <input type="text" name="message"><br><br>
-			<input type="submit" name="send_message" value="Send Message">
+			Comment: <input type="text" name="comment"><br><br>
+			<input type="submit" name="write_comment" value="Post Comment">
 		</form>
 
 	</div>

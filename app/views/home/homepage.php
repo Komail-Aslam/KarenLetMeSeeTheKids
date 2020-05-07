@@ -30,10 +30,20 @@
 					$posterClient = $client->getClientClientId($posts->client_id);
 					$profile = $this->model('Profile');
 					$posterProfile = $profile->currentProfileProfileId($posterClient->profile_id);
-					echo "<tr><td style='width: 20%'>$posterProfile->first_name $posterProfile->last_name</td>
-						<td>$posts->post_content</td>
-						<form action='' method='post'>
+					echo "<tr><td style='width: 20%'><b>$posterProfile->first_name $posterProfile->last_name</b></td>
+						<td><b>$posts->post_content</b>";
+						$comment = $this->model('Comments');
+						$comments = $comment->viewComments($posts->post_id);
+						if ($comments != null){
+							foreach($comments as $comment){
+								$profile = $this->model('Profile');
+								$commenter = $profile->currentProfileProfileId($comment->commenter_id);
+								echo "<br><t>$commenter->first_name $commenter->last_name: $comment->comment</t>";
+							}
+						}
+						echo "</td><form action='' method='post'>
 						<td><input type='submit' name='$posts->post_id' value='Comment'></td></form></tr>";
+
 				}
 			}
 		?>
@@ -43,12 +53,15 @@
 </html>
 
 <style type="text/css">
+	t {
+		font-size: 18px;
+	}
 	table {
 		padding: 5px;
 		font-size: 25px;
 		width: 100%;
 		text-align: center;
-		border-spacing: 40px;
+		border-spacing: 50px;
 		border-collapse: collapse;	
 	}
 	th {
@@ -56,7 +69,7 @@
 		//border-bottom: 1px solid black;
 	}
 	td {
-		padding-top: 8px;
+		padding-top: 20px;
 		border-bottom: 1px solid black;
 	}
 	.main {
