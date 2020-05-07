@@ -145,8 +145,45 @@ class HomeController extends Controller
 
     	$profile = $this->model('Profile');
     	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
+    	
+    	$client = $this->model('Client');
+    	$currentClient = $client->getClient($_SESSION['profile_id']);
+    	$_SESSION["client_id"] = $currentClient->client_id;
 
-    	$this->view('home/homepage', $currentProfile);
+    	$post = $this->model('Post');
+    	$posts = $post->viewPosts();
+
+    	foreach ($posts as $post) {
+    		if (isset($_POST[$post->post_id])){
+    			$_SESSION['comment_post'] = $post->post_id;
+    			return header('location:/Home/writeComment');
+    		}
+    	}
+    	$this->view('home/homepage', ['posts' => $posts]);
+    }
+
+    public function writeComment(){
+    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
+    		return header('location:/Home/Login');
+		
+		$post = $this->model('Post');
+		$currentPost = $post->getPost($_SESSION['comment_post']);
+		$this->view('home/writeComment', $currentPost);   	
+    }
+
+    public function writePost(){
+    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
+    		return header('location:/Home/Login');
+
+    	if (isset($_POST['post'])) {
+    		$post = $this->model('Post');
+    		$post->client_id = $_SESSION['client_id'];
+    		$post->post_content = $_POST['post_content'];
+    		$post->insert();
+    		header('location:/Home/homepage');
+    	}
+    	else
+    		$this->view('home/writePost');
     }
 
     public function modifyProfile(){
@@ -184,10 +221,6 @@ class HomeController extends Controller
     	
 
 		$this->view('home/viewMessages', ['messages' => $messages]);
-
-		// foreach($messages as $messages){
-			
-		// }
     }
 
     public function createMessage(){

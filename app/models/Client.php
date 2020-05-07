@@ -12,6 +12,22 @@
             return self::$_connection->lastInsertId();
         }
 
+        function getClient($profile_id){
+        	$sql = 'SELECT * FROM Client WHERE profile_id = :profile_id';
+	        $stmt = self::$_connection->prepare($sql);
+	        $stmt->execute(['profile_id'=>$profile_id]);
+	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Client');
+	        return $stmt->fetch();
+        }
+
+        function getClientClientId($client_id){
+        	$sql = 'SELECT * FROM Client WHERE client_id = :client_id';
+	        $stmt = self::$_connection->prepare($sql);
+	        $stmt->execute(['client_id'=>$client_id]);
+	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Client');
+	        return $stmt->fetch();
+        }
+
 	}
 
 ?>

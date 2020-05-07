@@ -26,10 +26,17 @@
     }
 
     function currentProfile($user_id){
-
         $sql = 'SELECT * FROM Profile WHERE user_id = :user_id';
         $stmt = self::$_connection->prepare($sql);
         $stmt->execute(['user_id'=>$user_id]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Profile');
+        return $stmt->fetch();
+    }
+
+    function currentProfileProfileId($profile_id){
+        $sql = 'SELECT * FROM Profile WHERE profile_id = :profile_id';
+        $stmt = self::$_connection->prepare($sql);
+        $stmt->execute(['profile_id'=>$profile_id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Profile');
         return $stmt->fetch();
     }
