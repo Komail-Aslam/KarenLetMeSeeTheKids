@@ -11,63 +11,27 @@
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Home/ModifyProfile">Profile</a>
-			<a class="active" href="/Home/ViewMessages">Messages</a>
+			<a href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
-					echo "<a href='/Home/viewProfessionals'>Professionals</a>
+					echo "<a href='/Home/ModifyProfile'>Professionals</a>
 						<a href='/Home/ModifyProfile'>Logbook</a>";
 				}
 				else
-					echo "<a href='/Professional/viewClients'>Clients</a>";
+					echo "<a class='active' href='/Professional/viewClients'>Clients</a>";
 			?>
 		</div>
-		<form action="/Home/CreateMessage" method="get">
-			<input class="button" type="submit" name="Submit" value="Compose New Message">
+
+		<form action="" method="post">
+			<input type="text" name="search_client">
+			<input type="submit" name="search" value="Search for Client">
 		</form>
-		<table>
-			<th>From</th>
-			<th>Message</th>
-				<?php
-				foreach($data["messages"] as $messages){
-					$profile = $this->model('Profile');
-					$sender = $profile->currentProfile($messages[2]);
-					echo "<tr><td style='width: 20%'>$sender->first_name $sender->last_name</td>
-					<td>$messages[1]</td></tr>";
-				}
-				?>
-			
-		</table> 
-		
 	</div>
 	</body>
 </html>
 
 <style type="text/css">
-	table {
-		padding: 5px;
-		font-size: 25px;
-		width: 100%;
-		text-align: center;	
-	}
-	th {
-		font-size: 30px;
-	}
-	td {
-		border: 1px solid black;
-	}
-	.button {
-		  background-color: violet; /* Green */
-		  border: 3px solid black;
-		  color: black;
-		  padding: 15px 32px;
-		  text-align: center;
-		  text-decoration: none;
-		 display: inline-block;
-		 font-size: 16px;
-		 margin-top: 20px;
-	}
-	
 	.main {
 		padding: 60px 80px;
 		width: 70%;

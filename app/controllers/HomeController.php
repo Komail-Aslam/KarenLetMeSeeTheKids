@@ -77,7 +77,7 @@ class HomeController extends Controller
 		        if ($_POST['clientOrProfessional'] == 'client')
 		        	header('location:/Home/clientProfileCreate');
 		        else
-		        	header('location:/Home/professionalProfileCreate');
+		        	header('location:/Professional/professionalProfileCreate');
 	       	}
 	    }
 	    else{
@@ -146,12 +146,31 @@ class HomeController extends Controller
     	$profile = $this->model('Profile');
     	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
     	
+
     	$client = $this->model('Client');
     	$currentClient = $client->getClient($_SESSION['profile_id']);
-    	$_SESSION["client_id"] = $currentClient->client_id;
+    	if ($currentClient != null)
+    		$_SESSION["client_id"] = $currentClient->client_id;
+    	else {
+    		$professional = $this->model('Professional');
+    		$currentProfessional = $professional->getProfessional($currentProfile->profile_id);
+    		$_SESSION["professional_id"] = $currentProfessional->professional_id;
+    	}
 
     	$post = $this->model('Post');
     	$posts = $post->viewPosts();
+    	$comment = $this->model('Comments');
+    	$comments = $comment->allComments();
+
+    	foreach ($comments as $comment) {
+    			// echo +$_POST[$comment->comment_id];
+    		if (isset($_POST["1+$comment->comment_id"])){
+    			$comment->verifyComment($comment->comment_id);
+    		}
+    		if (isset($_POST["0+$comment->comment_id"])){
+    			$comment->unverifyComment($comment->comment_id);
+    		}
+    	}
 
     	foreach ($posts as $post) {
     		if (isset($_POST[$post->post_id])){
@@ -226,9 +245,7 @@ class HomeController extends Controller
     	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
 
     	$message = $this->model('Messages');
-    	$messages = $message->viewMessages($currentProfile->user_id);
-
-    	
+    	$messages = $message->viewMessages($currentProfile->user_id);	
 
 		$this->view('home/viewMessages', ['messages' => $messages]);
     }
@@ -268,6 +285,59 @@ class HomeController extends Controller
     		$message->insert();
     		return header('location:/Home/viewMessages');
     	}
+    }
+
+    public function viewProfessionals(){
+    	if (isset($_POST['search'])){
+	   		$_SESSION['professional_search'] = $_POST['search_professional'];
+			$search = $_SESSION['professional_search'];
+			$profile = $this->model('Profile');
+		   	$profiles = $profile->search($search);
+		   	$professional = $this->model('Professional');
+			$professionals = $professional->getProfessionalProfession($search);
+		   	if ($profiles!=null || $professionals!=null)
+    			header('location:/Home/searchProfessional');
+    		else{
+    			//error
+    			$this->view('home/viewProfessionals');
+    		}
+		}
+		else
+    		$this->view('home/viewProfessionals');
+    }
+
+    public function searchProfessional(){
+    	$search = $_SESSION['professional_search'];
+
+		$profile = $this->model('Profile');
+	   	$profiles = $profile->search($search);
+	   	if ($profiles!=null){
+			$this->view('home/searchProfessional', ['profiles'=> $profiles]);
+			foreach ($profiles as $profile) {
+				if (isset($_POST[$profile->profile_id])){
+					$_SESSION['viewProfessionalProfileId'] = $profile->profile_id;
+					return header('location:/Home/viewProfessionalProfile');
+				}
+			}
+	   	}
+
+		$professional = $this->model('Professional');
+		$professionals = $professional->getProfessionalProfession($search);
+		if ($professionals!=null){
+			$this->view('home/searchProfessional', ['professionals'=> $professionals]);
+			foreach ($professionals as $professional) {
+				if (isset($_POST[$professional->profile_id])){
+					$_SESSION['viewProfessionalProfileId'] = $professional->profile_id;
+					return header('location:/Home/viewProfessionalProfile');
+				}
+			}
+		}
+    }
+
+    public function viewProfessionalProfile(){
+    	$profile = $this->model('Profile');
+		$currentProfile = $profile->currentProfileProfileId($_SESSION['viewProfessionalProfileId']);
+		$this->view('home/viewProfessionalProfile', $currentProfile);
     }
 }
 

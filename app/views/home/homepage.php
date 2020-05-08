@@ -13,12 +13,25 @@
 			<a href="/Home/ModifyProfile">Profile</a>
 			<a href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
-			<a href="/Home/ModifyProfile">Professionals</a>
-			<a href="/Home/ModifyProfile">Logbook</a>
+			<?php
+				if (isset($_SESSION['client_id'])){
+					echo "<a href='/Home/viewProfessionals'>Professionals</a>
+						<a href='/Home/ModifyProfile'>Logbook</a>";
+				}
+				else
+					echo "<a href='/Professional/viewClients'>Clients</a>";
+			?>
+			
 		</div>
-		<form action="/Home/writePost" method="get">
-			<input class="button" type="submit" name="Submit" value="Compose New Post">
-		</form>
+		<?php 
+			if (isset($_SESSION['client_id'])){
+				echo "
+				<form action='/Home/writePost' method='get'>
+					<input class='button' type='submit' name='Submit' value='Compose New Post'>
+				</form>
+				";
+			}
+		?>
 
 		<table>
 			<th>Posted By:</th>
@@ -31,17 +44,23 @@
 					$profile = $this->model('Profile');
 					$posterProfile = $profile->currentProfileProfileId($posterClient->profile_id);
 					echo "<tr><td style='width: 20%'><b>$posterProfile->first_name $posterProfile->last_name</b></td>
-						<td><b>$posts->post_content</b>";
+						<td><b>$posts->post_content</b><br>";
 						$comment = $this->model('Comments');
 						$comments = $comment->viewComments($posts->post_id);
 						if ($comments != null){
 							foreach($comments as $comment){
 								$profile = $this->model('Profile');
 								$commenter = $profile->currentProfileProfileId($comment->commenter_id);
-								echo "<br><t>$commenter->first_name $commenter->last_name: $comment->comment</t>";
+								echo "<t><form action='' method='post'>$commenter->first_name $commenter->last_name: $comment->comment";
+								if ($comment->verified == 1){
+									echo"<b>✓</b>";
+									echo"<input type='submit' name='0+$comment->comment_id' value='Unverify'><br></t>";
+								}
+								else
+									echo"<input type='submit' name='1+$comment->comment_id' value='Verify'><br></t>";
 							}
 						}
-						echo "</td><form action='' method='post'>
+						echo "</td>
 						<td><input type='submit' name='$posts->post_id' value='Comment'></td></form></tr>";
 
 				}

@@ -13,9 +13,14 @@
 			<a href="/Home/ModifyProfile">Profile</a>
 			<a class="active" href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
-			<a href="/Home/ModifyProfile">Professionals</a>
-			<a href="/Home/ModifyProfile">Logbook</a>
-			<a href='/Home/Logout'>Logout</a>
+			<?php
+				if (isset($_SESSION['client_id'])){
+					echo "<a href='/Home/viewProfessionals'>Professionals</a>
+						<a href='/Home/ModifyProfile'>Logbook</a>";
+				}
+				else
+					echo "<a href='/Professional/viewClients'>Clients</a>";
+			?>
 		</div>
 		<h2>Who would you like to message?</h2>
 			<form action="" method="post">

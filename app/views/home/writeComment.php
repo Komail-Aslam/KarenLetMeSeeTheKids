@@ -13,8 +13,14 @@
 			<a href="/Home/ModifyProfile">Profile</a>
 			<a href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
-			<a href="/Home/ModifyProfile">Professionals</a>
-			<a href="/Home/ModifyProfile">Logbook</a>
+			<?php
+				if (isset($_SESSION['client_id'])){
+					echo "<a href='/Home/viewProfessionals'>Professionals</a>
+						<a href='/Home/ModifyProfile'>Logbook</a>";
+				}
+				else
+					echo "<a href='/Professional/viewClients'>Clients</a>";
+			?>
 		</div>
 
 		<?php

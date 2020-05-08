@@ -11,34 +11,29 @@
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Home/ModifyProfile">Profile</a>
-			<a class="active" href="/Home/ViewMessages">Messages</a>
+			<a href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
-					echo "<a href='/Home/viewProfessionals'>Professionals</a>
+					echo "<a class='active' href='/Home/viewProfessionals'>Professionals</a>
 						<a href='/Home/ModifyProfile'>Logbook</a>";
 				}
 				else
 					echo "<a href='/Professional/viewClients'>Clients</a>";
 			?>
 		</div>
-		<form action="/Home/CreateMessage" method="get">
-			<input class="button" type="submit" name="Submit" value="Compose New Message">
-		</form>
-		<table>
-			<th>From</th>
-			<th>Message</th>
-				<?php
-				foreach($data["messages"] as $messages){
-					$profile = $this->model('Profile');
-					$sender = $profile->currentProfile($messages[2]);
-					echo "<tr><td style='width: 20%'>$sender->first_name $sender->last_name</td>
-					<td>$messages[1]</td></tr>";
-				}
-				?>
-			
-		</table> 
-		
+		<table style="padding-top: 30px;">
+		<?php
+			$professional = $this->model('Professional');
+			$currentProfessional = $professional->getProfessional($data->profile_id);
+			echo "<tr><td>Name: </td><td>$data->first_name $data->last_name</td></tr>
+					<tr><td>Email: </td><td>$data->email</td></tr>
+					<tr><td>Location: </td><td>$data->city, $data->country</td></tr>
+					<tr><td>Profession: </td><td>$currentProfessional->profession</td></tr>
+					<tr><td>Education: </td><td>$currentProfessional->education</td></tr>
+					<tr><td>Experience: </td><td>$currentProfessional->years years</td></tr>";
+		?>
+		</table>
 	</div>
 	</body>
 </html>
@@ -56,18 +51,6 @@
 	td {
 		border: 1px solid black;
 	}
-	.button {
-		  background-color: violet; /* Green */
-		  border: 3px solid black;
-		  color: black;
-		  padding: 15px 32px;
-		  text-align: center;
-		  text-decoration: none;
-		 display: inline-block;
-		 font-size: 16px;
-		 margin-top: 20px;
-	}
-	
 	.main {
 		padding: 60px 80px;
 		width: 70%;

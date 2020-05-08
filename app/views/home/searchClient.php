@@ -11,34 +11,49 @@
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Home/ModifyProfile">Profile</a>
-			<a class="active" href="/Home/ViewMessages">Messages</a>
+			<a href="/Home/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
-					echo "<a href='/Home/viewProfessionals'>Professionals</a>
+					echo "<a href='/Home/ModifyProfile'>Professionals</a>
 						<a href='/Home/ModifyProfile'>Logbook</a>";
 				}
 				else
-					echo "<a href='/Professional/viewClients'>Clients</a>";
+					echo "<a class='active' href='/Professional/viewClients'>Clients</a>";
 			?>
 		</div>
-		<form action="/Home/CreateMessage" method="get">
-			<input class="button" type="submit" name="Submit" value="Compose New Message">
-		</form>
+		<form action="" method="post">
 		<table>
-			<th>From</th>
-			<th>Message</th>
-				<?php
-				foreach($data["messages"] as $messages){
-					$profile = $this->model('Profile');
-					$sender = $profile->currentProfile($messages[2]);
-					echo "<tr><td style='width: 20%'>$sender->first_name $sender->last_name</td>
-					<td>$messages[1]</td></tr>";
+			<th>Client Name:</th>
+			<th>Looking For:</th>
+		<?php
+			if ($data!=null){
+				if (isset($data['profiles'])){
+					foreach ($data["profiles"] as $profile) {
+						$client = $this->model('Client');
+						$currClient = $client->getClient($profile->profile_id);
+						if ($currClient != null){
+							echo "<tr><td>$profile->first_name $profile->last_name</td>
+										<td>$currClient->professional_type</td>
+										<td><input type='submit' name='$profile->profile_id' value='View Profile'></td></tr>";
+						}
+					}
 				}
-				?>
-			
-		</table> 
-		
+				else {
+					foreach ($data["clients"] as $client) {
+						$profile = $this->model('Profile');
+						$currProfile = $profile->currentProfileProfileId($client->profile_id);
+						if ($currProfile != null){
+							echo "<tr><td>$currProfile->first_name $currProfile->last_name</td>
+										<td>$client->professional_type</td>
+										<td><input type='submit' name='$currProfile->profile_id' value='View Profile'></td></tr>";
+						}
+					}
+				}
+			}
+		?>
+		</table>
+		</form>
 	</div>
 	</body>
 </html>
@@ -56,18 +71,6 @@
 	td {
 		border: 1px solid black;
 	}
-	.button {
-		  background-color: violet; /* Green */
-		  border: 3px solid black;
-		  color: black;
-		  padding: 15px 32px;
-		  text-align: center;
-		  text-decoration: none;
-		 display: inline-block;
-		 font-size: 16px;
-		 margin-top: 20px;
-	}
-	
 	.main {
 		padding: 60px 80px;
 		width: 70%;

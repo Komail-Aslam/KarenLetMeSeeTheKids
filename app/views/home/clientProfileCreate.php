@@ -14,9 +14,9 @@
 
 		<form action="" method="post">
 			What type of professional are you looking for? <br> 
-			Psychologist: <input type="radio" name="professional_type" value="psychologist">
-			Psychiatrist: <input type="radio" name="professional_type" value="psychiatrist">
-			Child Therapist: <input type="radio" name="professional_type" value="child_therapist">
+			Psychologist: <input type="radio" name="professional_type" value="Psychologist">
+			Psychiatrist: <input type="radio" name="professional_type" value="Psychiatrist">
+			Child Therapist: <input type="radio" name="professional_type" value="Child Therapist">
 
 			<br /><br>
 			<input type="submit" name="action" value="Proceed">
