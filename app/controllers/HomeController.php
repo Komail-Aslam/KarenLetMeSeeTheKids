@@ -288,6 +288,9 @@ class HomeController extends Controller
     }
 
     public function viewProfessionals(){
+    	$relation = $this->model('Relation');
+		$allRelations = $relation->getRelationsClientId($_SESSION['client_id']);
+
     	if (isset($_POST['search'])){
 	   		$_SESSION['professional_search'] = $_POST['search_professional'];
 			$search = $_SESSION['professional_search'];
@@ -299,11 +302,20 @@ class HomeController extends Controller
     			header('location:/Home/searchProfessional');
     		else{
     			//error
-    			$this->view('home/viewProfessionals');
+    			$this->view('home/viewProfessionals', ['relations' => $allRelations]);
     		}
 		}
-		else
-    		$this->view('home/viewProfessionals');
+
+		foreach ($allRelations as $relation) {
+			$professional = $this->model('Professional');
+			$currProfessional = $professional->getProfessionalProfessionalId($relation->professional_id);
+			if (isset($_POST["$currProfessional->professional_id"])){
+				$relation->delete();
+				return header('location:/Home/viewProfessionals');
+			}
+		}
+
+    	$this->view('home/viewProfessionals', ['relations' => $allRelations]);
     }
 
     public function searchProfessional(){
@@ -337,7 +349,21 @@ class HomeController extends Controller
     public function viewProfessionalProfile(){
     	$profile = $this->model('Profile');
 		$currentProfile = $profile->currentProfileProfileId($_SESSION['viewProfessionalProfileId']);
-		$this->view('home/viewProfessionalProfile', $currentProfile);
+		$professional = $this->model('Professional');
+		$professionalProfile = $professional->getProfessional($_SESSION['viewProfessionalProfileId']);
+		$request = $this->model('Request');
+		$request->sender_id = $_SESSION['client_id'];
+		$request->receiver_id = $professionalProfile->professional_id;
+		if (isset($_POST['request'])){
+			$request->insert();
+			$this->view('home/viewProfessionalProfile', $currentProfile);
+		}
+		else if (isset($_POST['deleteRequest'])){
+			$request->delete();
+			$this->view('home/viewProfessionalProfile', $currentProfile);
+		}
+		else
+			$this->view('home/viewProfessionalProfile', $currentProfile);
     }
 }
 

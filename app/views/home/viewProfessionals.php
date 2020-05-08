@@ -25,12 +25,45 @@
 		<form action="" method="post">
 			<input type="text" name="search_professional">
 			<input type="submit" name="search" value="Search for Professional">
+
+			<table>
+			<th>Professionals</th>
+			<?php
+				if ($data["relations"]!=null){
+					$professional = $this->model('Professional');
+					$profile = $this->model('Profile');
+					foreach ($data["relations"] as $relation) {
+						$currProfessional = $professional->getProfessionalProfessionalId($relation->professional_id);
+						$professionalProfile = $profile->currentProfileProfileId($currProfessional->profile_id);
+						// $client = $this->model('Client');
+						// $sender = $client->getClientClientId($request->sender_id);
+						// $profile = $this->model('Profile');
+						// $senderProfile = $profile->currentProfileProfileId($sender->profile_id);
+						echo "<tr><td>$professionalProfile->first_name $professionalProfile->last_name</td>
+								<td><input type='submit' name='$currProfessional->professional_id' value='End Interaction'></td></tr>";
+					}
+				}
+			?>
+	</table>
+	</form>
 		</form>
 	</div>
 	</body>
 </html>
 
 <style type="text/css">
+	table {
+		padding: 5px;
+		font-size: 25px;
+		width: 100%;
+		text-align: center;	
+	}
+	th {
+		font-size: 30px;
+	}
+	td {
+		border: 1px solid black;
+	}
 	.main {
 		padding: 60px 80px;
 		width: 70%;

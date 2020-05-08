@@ -22,6 +22,18 @@
 					echo "<a href='/Professional/viewClients'>Clients</a>";
 			?>
 		</div>
+		<form action='' method='post'>
+			<?php
+				$professional = $this->model('Professional');
+				$currentProfessional = $professional->getProfessional($data->profile_id);
+				$req = $this->model('Request');
+				$request = $req->getRequest($_SESSION['client_id'], $currentProfessional->professional_id);
+				if ($request==null)
+					echo "<input type='submit' name='request' value='Request Professional'>"; 
+				else
+					echo "<input type='submit' name='deleteRequest' value='Delete Request Professional'>"; 
+			?>
+		</form>
 		<table style="padding-top: 30px;">
 		<?php
 			$professional = $this->model('Professional');

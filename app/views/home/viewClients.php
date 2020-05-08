@@ -26,12 +26,60 @@
 		<form action="" method="post">
 			<input type="text" name="search_client">
 			<input type="submit" name="search" value="Search for Client">
-		</form>
+		<table>
+		<th>Requests</th>
+		<?php
+			if ($data["requests"]!=null){
+				foreach ($data["requests"] as $request) {
+					$client = $this->model('Client');
+					$sender = $client->getClientClientId($request->sender_id);
+					$profile = $this->model('Profile');
+					$senderProfile = $profile->currentProfileProfileId($sender->profile_id);
+					echo "<tr><td>$senderProfile->first_name $senderProfile->last_name</td>
+							<td><input type='submit' name='0+$senderProfile->profile_id' value='View Profile'>
+							<input type='submit' name='1+$request->sender_id' value='Accept'>
+							<input type='submit' name='2+$request->sender_id' value='Decline'</td></tr>";
+				}
+			}
+		?>
+	</table>
+	<table>
+		<th>Clients</th>
+		<?php
+			if ($data["relations"]!=null){
+				$client = $this->model('Client');
+				$profile = $this->model('Profile');
+				foreach ($data["relations"] as $relation) {
+					$currClient = $client->getClientClientId($relation->client_id);
+					$clientProfile = $profile->currentProfileProfileId($currClient->profile_id);
+					// $client = $this->model('Client');
+					// $sender = $client->getClientClientId($request->sender_id);
+					// $profile = $this->model('Profile');
+					// $senderProfile = $profile->currentProfileProfileId($sender->profile_id);
+					echo "<tr><td>$clientProfile->first_name $clientProfile->last_name</td>
+							<td><input type='submit' name='$currClient->client_id' value='End Interaction'></td></tr>";
+				}
+			}
+		?>
+	</table>
+	</form>
 	</div>
 	</body>
 </html>
 
 <style type="text/css">
+	table {
+		padding: 5px;
+		font-size: 25px;
+		width: 100%;
+		text-align: center;	
+	}
+	th {
+		font-size: 30px;
+	}
+	td {
+		border: 1px solid black;
+	}
 	.main {
 		padding: 60px 80px;
 		width: 70%;

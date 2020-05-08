@@ -29,6 +29,11 @@ class ProfessionalController extends Controller
 	}
 
 	public function viewClients(){
+		$request = $this->model('Request');
+		$allRequests = $request->getRequestsProfessional($_SESSION['professional_id']);
+		$relation = $this->model('Relation');
+		$allRelations = $relation->getRelations($_SESSION['professional_id']);
+
 		if (isset($_POST['search'])){
 	   		$_SESSION['client_search'] = $_POST['search_client'];
 			$search = $_SESSION['client_search'];
@@ -40,11 +45,42 @@ class ProfessionalController extends Controller
     			header('location:/Professional/searchClient');
     		else{
     			//error
-    			$this->view('home/viewClients');
+    			$this->view('home/viewClients', ['requests' => $allRequests]);
     		}
 		}
-		else
-			$this->view('home/viewClients');
+
+		foreach ($allRequests as $request) {
+			$client = $this->model('Client');
+			$sender = $client->getClientClientId($request->sender_id);
+			
+			if (isset($_POST["0+$sender->profile_id"])){
+				$_SESSION['viewClientProfileId'] = $sender->profile_id;
+				return header('location:/Professional/viewClientProfile');
+			}
+			else if (isset($_POST["1+$request->sender_id"])){
+				$relation = $this->model('Relation');
+				$relation->client_id = $request->sender_id;
+				$relation->professional_id = $request->receiver_id;
+				$relation->insert();
+				$request->delete();
+				return header('location:/Professional/viewClients');
+			}
+			else if (isset($_POST["2+$request->sender_id"])){
+				$request->delete();
+				return header('location:/Professional/viewClients');
+			}
+		}
+
+		foreach ($allRelations as $relation) {
+			$client = $this->model('Client');
+			$currClient = $client->getClientClientId($relation->client_id);
+			if (isset($_POST["$currClient->client_id"])){
+				$relation->delete();
+				return header('location:/Professional/viewClients');
+			}
+		}
+
+		$this->view('home/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);
 	}
 
 	public function searchClient()
