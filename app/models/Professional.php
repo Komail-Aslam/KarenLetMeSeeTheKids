@@ -38,6 +38,14 @@
 	        return $stmt->fetchAll();
         }
 
+        function update(){
+	        $sql = 'UPDATE Professional SET profession = :profession, education = :education, years = :years WHERE professional_id = :professional_id';
+	        $stmt = self::$_connection->prepare($sql);
+	        $stmt->execute(['profession'=>$this->profession, 'education'=>$this->education,'years'=>$this->years, 'professional_id'=>$this->professional_id]);
+	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Professional');
+	        return $stmt->rowCount();
+    }
+
 	}
 
 ?>

@@ -1,0 +1,45 @@
+<?php
+
+class ProfileController extends Controller{
+
+	public function modifyProfile(){
+    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
+    		return header('location:/Home/Login');
+    	$profile = $this->model('Profile');
+    	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
+		$this->view('home/modifyProfile', $currentProfile);
+
+		if (isset($_POST['action'])){
+			$profile = $this->model('profile');
+			$profile->profile_id = $_SESSION['profile_id'];
+			$profile->user_id = $_SESSION['user_id'];
+			$profile->first_name = $_POST['first_name'];
+       		$profile->last_name = $_POST['last_name'];
+       		$profile->email = $_POST['email'];
+       		$profile->city = $_POST['city'];
+       		$profile->country = $_POST['country'];
+       		$profile->update();
+       		if (isset($_SESSION['professional_id'])){
+       			$professional = $this->model('Professional');
+       			$pro = $professional->getProfessionalProfessionalId($_SESSION['professional_id']);
+       			$pro->profession = $_POST['professional_type'];
+	    		$pro->education = $_POST['education'];
+	    		$pro->years = $_POST['years'];
+	    		$pro->update();
+       		}
+       		header('location:/Home/homepage');
+		}
+
+		if (isset($_SESSION['professional_id'])){
+			$review = $this->model('Review');
+			$reviews = $review->getReviews($_SESSION['professional_id']);
+
+			foreach ($reviews as $review) {
+				if (isset($_POST[$review->review_id])){
+					$_SESSION['reviewCommentId'] = $review->review_id;
+					header('location:/Comment/writeReviewComment');
+				}
+			}
+		}
+    }
+}

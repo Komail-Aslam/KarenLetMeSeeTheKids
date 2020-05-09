@@ -9,9 +9,9 @@
 		
 	<div class="main" style="background-color: lightblue">
 		<div class="topnav">
-			<a class="active" href="/Home/Homepage">Home</a>
+			<a href="/Home/Homepage">Home</a>
 			<a href="/Profile/ModifyProfile">Profile</a>
-			<a href="/Home/ViewMessages">Messages</a>
+			<a href="/Message/ViewMessages">Messages</a>
 			<a href="/Profile/ModifyProfile">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
@@ -22,6 +22,14 @@
 					echo "<a href='/Client/viewClients'>Clients</a>";
 			?>
 		</div>
+		<form action="" method="post">
+		<?php
+			$review = $this->model('Review');
+			$currReview = $review->getReviewReviewId($_SESSION['reviewCommentId']);
+			echo "Review: $currReview->review_content<br>";
+		?>
+		Enter the comment below:<br><input type="text" name="reviewComment">
+		<input type="submit" name="writeComment" value="Write Comment">
 	</div>
 	</body>
 </html>

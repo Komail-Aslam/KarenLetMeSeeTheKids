@@ -10,20 +10,20 @@
 	<div class="main" style="background-color: lightblue">
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
-			<a href="/Home/ModifyProfile">Profile</a>
-			<a class="active" href="/Home/ViewMessages">Messages</a>
+			<a href="/Profile/ModifyProfile">Profile</a>
+			<a class="active" href="/Message/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
-					echo "<a href='/Home/viewProfessionals'>Professionals</a>
+					echo "<a href='/Professional/viewProfessionals'>Professionals</a>
 						<a href='/Home/ModifyProfile'>Logbook</a>";
 				}
 				else
-					echo "<a href='/Professional/viewClients'>Clients</a>";
+					echo "<a href='/Client/viewClients'>Clients</a>";
 			?>
 		</div>
-		<form action="/Home/CreateMessage" method="get">
-			<input class="button" type="submit" name="Submit" value="Compose New Message">
+		<form action="" method="post">
+			<input class="button" type="submit" name="create" value="Compose New Message">
 		</form>
 		<table>
 			<th>From</th>

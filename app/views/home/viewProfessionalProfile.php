@@ -10,16 +10,16 @@
 	<div class="main" style="background-color: lightblue">
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
-			<a href="/Home/ModifyProfile">Profile</a>
-			<a href="/Home/ViewMessages">Messages</a>
-			<a href="/Home/ModifyProfile">Appointments</a>
+			<a href="/Profile/ModifyProfile">Profile</a>
+			<a href="/Message/ViewMessages">Messages</a>
+			<a href="/Profile/ModifyProfile">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
-					echo "<a class='active' href='/Home/viewProfessionals'>Professionals</a>
+					echo "<a class='active' href='/Professional/viewProfessionals'>Professionals</a>
 						<a href='/Home/ModifyProfile'>Logbook</a>";
 				}
 				else
-					echo "<a href='/Professional/viewClients'>Clients</a>";
+					echo "<a href='/Client/viewClients'>Clients</a>";
 			?>
 		</div>
 		<form action='' method='post'>
@@ -57,7 +57,18 @@
 					$currClient = $client->getClientClientId($review->client_id);
 					$profile = $this->model('Profile');
 					$clientProfile = $profile->currentProfileProfileId($currClient->profile_id);
-					echo "<tr><td>$clientProfile->first_name $clientProfile->last_name: $review->review_content</td></tr>";
+
+					$proProfile = $profile->currentProfileProfileId($_SESSION['viewProfessionalProfileId']);
+					$reviewComment = $this->model('reviewComment');
+					$comments = $reviewComment->getComments($review->review_id);
+					
+					echo "<tr><td>$clientProfile->first_name $clientProfile->last_name: $review->review_content";
+					if ($comments!=null){
+						foreach ($comments as $comment) {
+							echo "<br>$proProfile->first_name $proProfile->last_name: $comment->comment";	
+						}
+					}
+					echo "</td></tr>";
 				}
 			}
 			?>

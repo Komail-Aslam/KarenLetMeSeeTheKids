@@ -28,99 +28,97 @@ class ProfessionalController extends Controller
     		$this->view('home/professionalProfileCreate', $currentProfile);
 	}
 
-	public function viewClients(){
-		$request = $this->model('Request');
-		$allRequests = $request->getRequestsProfessional($_SESSION['professional_id']);
-		$relation = $this->model('Relation');
-		$allRelations = $relation->getRelations($_SESSION['professional_id']);
+	public function viewProfessionals(){
+    	$relation = $this->model('Relation');
+		$allRelations = $relation->getRelationsClientId($_SESSION['client_id']);
 
-		if (isset($_POST['search'])){
-	   		$_SESSION['client_search'] = $_POST['search_client'];
-			$search = $_SESSION['client_search'];
+    	if (isset($_POST['search'])){
+	   		$_SESSION['professional_search'] = $_POST['search_professional'];
+			$search = $_SESSION['professional_search'];
 			$profile = $this->model('Profile');
 		   	$profiles = $profile->search($search);
-		   	$client = $this->model('Client');
-			$clients = $client->getClientProfessionalType($search);
-		   	if ($profiles!=null || $clients!=null)
-    			header('location:/Professional/searchClient');
+		   	$professional = $this->model('Professional');
+			$professionals = $professional->getProfessionalProfession($search);
+		   	if ($profiles!=null || $professionals!=null)
+    			header('location:/Professional/searchProfessional');
     		else{
     			//error
-    			$this->view('home/viewClients', ['requests' => $allRequests]);
+    			$this->view('home/viewProfessionals', ['relations' => $allRelations]);
     		}
 		}
 
-		foreach ($allRequests as $request) {
-			$client = $this->model('Client');
-			$sender = $client->getClientClientId($request->sender_id);
-			
-			if (isset($_POST["0+$sender->profile_id"])){
-				$_SESSION['viewClientProfileId'] = $sender->profile_id;
-				return header('location:/Professional/viewClientProfile');
-			}
-			else if (isset($_POST["1+$request->sender_id"])){
-				$relation = $this->model('Relation');
-				$relation->client_id = $request->sender_id;
-				$relation->professional_id = $request->receiver_id;
-				$relation->insert();
-				$request->delete();
-				return header('location:/Professional/viewClients');
-			}
-			else if (isset($_POST["2+$request->sender_id"])){
-				$request->delete();
-				return header('location:/Professional/viewClients');
-			}
-		}
-
 		foreach ($allRelations as $relation) {
-			$client = $this->model('Client');
-			$currClient = $client->getClientClientId($relation->client_id);
-			if (isset($_POST["$currClient->client_id"])){
+			$professional = $this->model('Professional');
+			$currProfessional = $professional->getProfessionalProfessionalId($relation->professional_id);
+			if (isset($_POST["$currProfessional->professional_id"])){
 				$relation->delete();
-				return header('location:/Professional/viewClients');
+				return header('location:/Professional/viewProfessionals');
 			}
-			else if (isset($_POST["0+$currClient->client_id"])){
+			else if (isset($_POST["0+$currProfessional->professional_id"])){
 				$profile = $this->model('Profile');
-				$currProfile = $profile->currentProfileProfileId($currClient->profile_id);
+				$currProfile = $profile->currentProfileProfileId($currProfessional->profile_id);
 				$_SESSION['receiver'] = $currProfile->user_id;
-				return header('location:/Home/writeMessage');
+				return header('location:/Message/writeMessage');
+			}
+			else if (isset($_POST["1+$currProfessional->professional_id"])){
+				$_SESSION['professionalReview'] = $currProfessional->profile_id;
+				return header('location:/Review/writeReview');
 			}
 		}
 
-		$this->view('home/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);
-	}
+    	$this->view('home/viewProfessionals', ['relations' => $allRelations]);
+    }
 
-	public function searchClient()
-	{
-		$search = $_SESSION['client_search'];
+    public function searchProfessional(){
+    	$search = $_SESSION['professional_search'];
 
 		$profile = $this->model('Profile');
 	   	$profiles = $profile->search($search);
 	   	if ($profiles!=null){
-			$this->view('home/searchClient', ['profiles'=> $profiles]);
+			$this->view('home/searchProfessional', ['profiles'=> $profiles]);
 			foreach ($profiles as $profile) {
 				if (isset($_POST[$profile->profile_id])){
-					$_SESSION['viewClientProfileId'] = $profile->profile_id;
-					return header('location:/Professional/viewClientProfile');
+					$_SESSION['viewProfessionalProfileId'] = $profile->profile_id;
+					return header('location:/Professional/viewProfessionalProfile');
 				}
 			}
 	   	}
 
-		$client = $this->model('Client');
-		$clients = $client->getClientProfessionalType($search);
-		if ($clients!=null){
-			$this->view('home/searchClient', ['clients'=> $clients]);
-			foreach ($clients as $client) {
-				if (isset($_POST[$client->profile_id])){
-					$_SESSION['viewClientProfileId'] = $client->profile_id;
-					return header('location:/Professional/viewClientProfile');
+		$professional = $this->model('Professional');
+		$professionals = $professional->getProfessionalProfession($search);
+		if ($professionals!=null){
+			$this->view('Professional/searchProfessional', ['professionals'=> $professionals]);
+			foreach ($professionals as $professional) {
+				if (isset($_POST[$professional->profile_id])){
+					$_SESSION['viewProfessionalProfileId'] = $professional->profile_id;
+					return header('location:/Professional/viewProfessionalProfile');
 				}
 			}
 		}
-	}
+    }
 
-	public function viewClientProfile(){
-		$profile = $this->model('Profile');
-		$currentProfile = $profile->currentProfileProfileId($_SESSION['viewClientProfileId']);
-		$this->view('home/viewClientProfile', $currentProfile);
-	}
+    public function viewProfessionalProfile(){
+    	$profile = $this->model('Profile');
+		$currentProfile = $profile->currentProfileProfileId($_SESSION['viewProfessionalProfileId']);
+		$professional = $this->model('Professional');
+		$professionalProfile = $professional->getProfessional($_SESSION['viewProfessionalProfileId']);
+		$request = $this->model('Request');
+		$request->sender_id = $_SESSION['client_id'];
+		$request->receiver_id = $professionalProfile->professional_id;
+
+		$review = $this->model('Review');
+		$reviews = $review->getReviews($professionalProfile->professional_id);
+
+		if (isset($_POST['request'])){
+			$request->insert();
+			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
+		}
+		else if (isset($_POST['deleteRequest'])){
+			$request->delete();
+			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
+		}
+		else
+			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
+    }
+
 }

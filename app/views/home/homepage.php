@@ -10,16 +10,16 @@
 	<div class="main" style="background-color: lightblue">
 		<div class="topnav">
 			<a class="active" href="/Home/Homepage">Home</a>
-			<a href="/Home/ModifyProfile">Profile</a>
-			<a href="/Home/ViewMessages">Messages</a>
+			<a href="/Profile/ModifyProfile">Profile</a>
+			<a href="/Message/ViewMessages">Messages</a>
 			<a href="/Home/ModifyProfile">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
-					echo "<a href='/Home/viewProfessionals'>Professionals</a>
+					echo "<a href='/Professional/viewProfessionals'>Professionals</a>
 						<a href='/Home/ModifyProfile'>Logbook</a>";
 				}
 				else
-					echo "<a href='/Professional/viewClients'>Clients</a>";
+					echo "<a href='/Client/viewClients'>Clients</a>";
 			?>
 			
 		</div>
@@ -52,12 +52,23 @@
 								$profile = $this->model('Profile');
 								$commenter = $profile->currentProfileProfileId($comment->commenter_id);
 								echo "<t><form action='' method='post'>$commenter->first_name $commenter->last_name: $comment->comment";
+								
 								if ($comment->verified == 1){
 									echo"<b>✓</b>";
-									echo"<input type='submit' name='0+$comment->comment_id' value='Unverify'><br></t>";
+									if (isset($_SESSION['professional_id'])){
+										echo"<input type='submit' name='0+$comment->comment_id' value='Unverify'><br></t>";
+									}
+									else
+										echo "<br>";
 								}
-								else
-									echo"<input type='submit' name='1+$comment->comment_id' value='Verify'><br></t>";
+
+								if ($comment->verified == 0){
+									if (isset($_SESSION['professional_id'])){
+										echo"<input type='submit' name='1+$comment->comment_id' value='Verify'><br></t>";	
+									}
+									else
+										echo "<br>";
+								}
 							}
 						}
 						echo "</td>

@@ -2,8 +2,6 @@
 
 class HomeController extends Controller
 {
-	public $mainProfile;
-
     public function index($name = '')
     {
        $profile = $this->model('Profile');
@@ -29,7 +27,6 @@ class HomeController extends Controller
 		     	}
 		   	}
 		    else{
-		    	//provide an error message
 		    	$_SESSION["error"] = "Wrong username or password!";
 		    	$this->view('home/login');
 		    }
@@ -75,7 +72,7 @@ class HomeController extends Controller
 		        $profiles = $profile->All();
 		        
 		        if ($_POST['clientOrProfessional'] == 'client')
-		        	header('location:/Home/clientProfileCreate');
+		        	header('location:/Client/clientProfileCreate');
 		        else
 		        	header('location:/Professional/professionalProfileCreate');
 	       	}
@@ -114,31 +111,6 @@ class HomeController extends Controller
 	   	}
     }
 
-    public function clientProfileCreate(){
-    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
-    		return header('location:/Home/Login');
-
-    	$profile = $this->model('Profile');
-    	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
-    	$this->view('home/clientProfileCreate', $currentProfile);
-
-    	if (isset($_POST['action'])){
-    		if (!isset($_POST['professional_type'])){
-    			$_SESSION["error"] = "Please select one of the options.";
-	    		$this->view('home/clientProfileCreate', $currentProfile);
-	    	}
-	    	else {
-	    		$client = $this->model('Client');
-	    		$client->profile_id = $currentProfile->profile_id;
-	    		$client->professional_type = $_POST['professional_type'];
-	    		$client->insert();
-	    		header('location:/Home/homepage');
-	    	}
-    	}
-    	else
-    		$this->view('home/clientProfileCreate', $currentProfile);
-    }
-
     public function homepage(){
     	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
     		return header('location:/Home/Login');
@@ -162,42 +134,25 @@ class HomeController extends Controller
     	$comment = $this->model('Comments');
     	$comments = $comment->allComments();
 
-    	foreach ($comments as $comment) {
-    			// echo +$_POST[$comment->comment_id];
-    		if (isset($_POST["1+$comment->comment_id"])){
-    			$comment->verifyComment($comment->comment_id);
-    		}
-    		if (isset($_POST["0+$comment->comment_id"])){
-    			$comment->unverifyComment($comment->comment_id);
-    		}
+    	if(isset($_SESSION['professional_id'])){
+	    	foreach ($comments as $comment) {
+	    			// echo +$_POST[$comment->comment_id];
+	    		if (isset($_POST["1+$comment->comment_id"])){
+	    			$comment->verifyComment($comment->comment_id);
+	    		}
+	    		if (isset($_POST["0+$comment->comment_id"])){
+	    			$comment->unverifyComment($comment->comment_id);
+	    		}
+	    	}
     	}
 
     	foreach ($posts as $post) {
     		if (isset($_POST[$post->post_id])){
     			$_SESSION['comment_post'] = $post->post_id;
-    			return header('location:/Home/writeComment');
+    			return header('location:/Comment/writeComment');
     		}
     	}
     	$this->view('home/homepage', ['posts' => $posts]);
-    }
-
-    public function writeComment(){
-    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
-    		return header('location:/Home/Login');
-		
-		$post = $this->model('Post');
-		$currentPost = $post->getPost($_SESSION['comment_post']);
-
-		if (isset($_POST['write_comment'])){
-			$comment = $this->model('Comments');
-			$comment->commenter_id = $_SESSION['profile_id'];
-			$comment->post_id = $_SESSION['comment_post'];
-			$comment->comment = $_POST['comment'];
-			$comment->insert();
-			return header('location:/Home/homepage');
-		}
-		else
-			$this->view('home/writeComment', $currentPost);   	
     }
 
     public function writePost(){
@@ -213,186 +168,6 @@ class HomeController extends Controller
     	}
     	else
     		$this->view('home/writePost');
-    }
-
-    public function modifyProfile(){
-    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
-    		return header('location:/Home/Login');
-    	$profile = $this->model('Profile');
-    	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
-		$this->view('home/modifyProfile', $currentProfile);
-
-		if (isset($_POST['action'])){
-			$profile = $this->model('profile');
-			$profile->profile_id = $_SESSION['profile_id'];
-			$profile->user_id = $_SESSION['user_id'];
-			$profile->first_name = $_POST['first_name'];
-       		$profile->last_name = $_POST['last_name'];
-       		$profile->email = $_POST['email'];
-       		$profile->city = $_POST['city'];
-       		$profile->country = $_POST['country'];
-       		$profile->update();
-       		header('location:/Home/homepage');
-		}
-
-
-    }
-
-    public function viewMessages(){
-    	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
-    		return header('location:/Home/Login');
-    	$profile = $this->model('Profile');
-    	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
-
-    	$message = $this->model('Messages');
-    	$messages = $message->viewMessages($currentProfile->user_id);	
-
-		$this->view('home/viewMessages', ['messages' => $messages]);
-    }
-
-    public function createMessage(){
-
-    	if (isset($_POST['search'])){
-    		$search = $_POST['receiver'];
-	    	$profile = $this->model('Profile');
-	   		$profiles = $profile->search($search);
-    		$this->view('home/createMessage', ['profiles' => $profiles]);
-    	}
-    	else if (isset($_POST['proceed'])){
-    		if (!isset($_POST['search_select'])){
-    			$_SESSION['error'] = "Please select someone to send the message to.";
-				$this->view('home/createMessage');
-			}
-			else {
-			   	$_SESSION['receiver'] = $_POST['search_select'];
-		    	return header('location:/Home/writeMessage');
-			}
-    	}
-    	else {
-			$this->view('home/createMessage');
-    	}
-    }
-
-    public function writeMessage(){
-    	$profile = $this->model('Profile');
-		$receiver = $profile->currentProfile($_SESSION['receiver']);
-    	$this->view('home/writeMessage', $receiver);
-    	if (isset($_POST['send_message'])){
-    		$message = $this->model('Messages');
-    		$message->sender = $_SESSION['user_id'];
-    		$message->receiver = $_SESSION['receiver'];
-    		$message->message = $_POST['message'];
-    		$message->insert();
-    		return header('location:/Home/viewMessages');
-    	}
-    }
-
-    public function viewProfessionals(){
-    	$relation = $this->model('Relation');
-		$allRelations = $relation->getRelationsClientId($_SESSION['client_id']);
-
-    	if (isset($_POST['search'])){
-	   		$_SESSION['professional_search'] = $_POST['search_professional'];
-			$search = $_SESSION['professional_search'];
-			$profile = $this->model('Profile');
-		   	$profiles = $profile->search($search);
-		   	$professional = $this->model('Professional');
-			$professionals = $professional->getProfessionalProfession($search);
-		   	if ($profiles!=null || $professionals!=null)
-    			header('location:/Home/searchProfessional');
-    		else{
-    			//error
-    			$this->view('home/viewProfessionals', ['relations' => $allRelations]);
-    		}
-		}
-
-		foreach ($allRelations as $relation) {
-			$professional = $this->model('Professional');
-			$currProfessional = $professional->getProfessionalProfessionalId($relation->professional_id);
-			if (isset($_POST["$currProfessional->professional_id"])){
-				$relation->delete();
-				return header('location:/Home/viewProfessionals');
-			}
-			else if (isset($_POST["0+$currProfessional->professional_id"])){
-				$profile = $this->model('Profile');
-				$currProfile = $profile->currentProfileProfileId($currProfessional->profile_id);
-				$_SESSION['receiver'] = $currProfile->user_id;
-				return header('location:/Home/writeMessage');
-			}
-			else if (isset($_POST["1+$currProfessional->professional_id"])){
-				$_SESSION['professionalReview'] = $currProfessional->profile_id;
-				return header('location:/Home/writeReview');
-			}
-		}
-
-    	$this->view('home/viewProfessionals', ['relations' => $allRelations]);
-    }
-
-    public function writeReview(){
-    	$professional = $this->model('Professional');
-    	$pro = $professional->getProfessional($_SESSION['professionalReview']);
-
-    	if (isset($_POST['writeReview'])){
-    		$review = $this->model('Review');
-    		$review->client_id = $_SESSION['client_id'];
-    		$review->professional_id = $pro->professional_id;
-    		$review->review_content = $_POST['reviewContent'];
-    		$review->insert();
-    		return header('location:/Home/viewProfessionals');
-    	}
-    	$this->view('home/writeReview', $_SESSION['professionalReview']);
-    }
-
-    public function searchProfessional(){
-    	$search = $_SESSION['professional_search'];
-
-		$profile = $this->model('Profile');
-	   	$profiles = $profile->search($search);
-	   	if ($profiles!=null){
-			$this->view('home/searchProfessional', ['profiles'=> $profiles]);
-			foreach ($profiles as $profile) {
-				if (isset($_POST[$profile->profile_id])){
-					$_SESSION['viewProfessionalProfileId'] = $profile->profile_id;
-					return header('location:/Home/viewProfessionalProfile');
-				}
-			}
-	   	}
-
-		$professional = $this->model('Professional');
-		$professionals = $professional->getProfessionalProfession($search);
-		if ($professionals!=null){
-			$this->view('home/searchProfessional', ['professionals'=> $professionals]);
-			foreach ($professionals as $professional) {
-				if (isset($_POST[$professional->profile_id])){
-					$_SESSION['viewProfessionalProfileId'] = $professional->profile_id;
-					return header('location:/Home/viewProfessionalProfile');
-				}
-			}
-		}
-    }
-
-    public function viewProfessionalProfile(){
-    	$profile = $this->model('Profile');
-		$currentProfile = $profile->currentProfileProfileId($_SESSION['viewProfessionalProfileId']);
-		$professional = $this->model('Professional');
-		$professionalProfile = $professional->getProfessional($_SESSION['viewProfessionalProfileId']);
-		$request = $this->model('Request');
-		$request->sender_id = $_SESSION['client_id'];
-		$request->receiver_id = $professionalProfile->professional_id;
-
-		$review = $this->model('Review');
-		$reviews = $review->getReviews($professionalProfile->professional_id);
-
-		if (isset($_POST['request'])){
-			$request->insert();
-			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
-		}
-		else if (isset($_POST['deleteRequest'])){
-			$request->delete();
-			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
-		}
-		else
-			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
     }
 }
 
