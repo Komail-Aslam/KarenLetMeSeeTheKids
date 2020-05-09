@@ -24,8 +24,9 @@
 		</div>
 		<form action='' method='post'>
 			<?php
+				$pro = $data["currentProfile"];
 				$professional = $this->model('Professional');
-				$currentProfessional = $professional->getProfessional($data->profile_id);
+				$currentProfessional = $professional->getProfessional($pro->profile_id);
 				$req = $this->model('Request');
 				$request = $req->getRequest($_SESSION['client_id'], $currentProfessional->professional_id);
 				if ($request==null)
@@ -36,15 +37,30 @@
 		</form>
 		<table style="padding-top: 30px;">
 		<?php
+			$pro = $data["currentProfile"];
 			$professional = $this->model('Professional');
-			$currentProfessional = $professional->getProfessional($data->profile_id);
-			echo "<tr><td>Name: </td><td>$data->first_name $data->last_name</td></tr>
-					<tr><td>Email: </td><td>$data->email</td></tr>
-					<tr><td>Location: </td><td>$data->city, $data->country</td></tr>
+			$currentProfessional = $professional->getProfessional($pro->profile_id);
+			echo "<tr><td>Name: </td><td>$pro->first_name $pro->last_name</td></tr>
+					<tr><td>Email: </td><td>$pro->email</td></tr>
+					<tr><td>Location: </td><td>$pro->city, $pro->country</td></tr>
 					<tr><td>Profession: </td><td>$currentProfessional->profession</td></tr>
 					<tr><td>Education: </td><td>$currentProfessional->education</td></tr>
 					<tr><td>Experience: </td><td>$currentProfessional->years years</td></tr>";
 		?>
+		</table>
+		<table>
+			<th>Reviews</th>
+			<?php
+				if ($data["reviews"]!=null){
+					foreach($data["reviews"] as $review){
+					$client = $this->model('client');
+					$currClient = $client->getClientClientId($review->client_id);
+					$profile = $this->model('Profile');
+					$clientProfile = $profile->currentProfileProfileId($currClient->profile_id);
+					echo "<tr><td>$clientProfile->first_name $clientProfile->last_name: $review->review_content</td></tr>";
+				}
+			}
+			?>
 		</table>
 	</div>
 	</body>

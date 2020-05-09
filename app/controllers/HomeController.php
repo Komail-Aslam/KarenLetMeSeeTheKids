@@ -313,9 +313,34 @@ class HomeController extends Controller
 				$relation->delete();
 				return header('location:/Home/viewProfessionals');
 			}
+			else if (isset($_POST["0+$currProfessional->professional_id"])){
+				$profile = $this->model('Profile');
+				$currProfile = $profile->currentProfileProfileId($currProfessional->profile_id);
+				$_SESSION['receiver'] = $currProfile->user_id;
+				return header('location:/Home/writeMessage');
+			}
+			else if (isset($_POST["1+$currProfessional->professional_id"])){
+				$_SESSION['professionalReview'] = $currProfessional->profile_id;
+				return header('location:/Home/writeReview');
+			}
 		}
 
     	$this->view('home/viewProfessionals', ['relations' => $allRelations]);
+    }
+
+    public function writeReview(){
+    	$professional = $this->model('Professional');
+    	$pro = $professional->getProfessional($_SESSION['professionalReview']);
+
+    	if (isset($_POST['writeReview'])){
+    		$review = $this->model('Review');
+    		$review->client_id = $_SESSION['client_id'];
+    		$review->professional_id = $pro->professional_id;
+    		$review->review_content = $_POST['reviewContent'];
+    		$review->insert();
+    		return header('location:/Home/viewProfessionals');
+    	}
+    	$this->view('home/writeReview', $_SESSION['professionalReview']);
     }
 
     public function searchProfessional(){
@@ -354,16 +379,20 @@ class HomeController extends Controller
 		$request = $this->model('Request');
 		$request->sender_id = $_SESSION['client_id'];
 		$request->receiver_id = $professionalProfile->professional_id;
+
+		$review = $this->model('Review');
+		$reviews = $review->getReviews($professionalProfile->professional_id);
+
 		if (isset($_POST['request'])){
 			$request->insert();
-			$this->view('home/viewProfessionalProfile', $currentProfile);
+			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
 		}
 		else if (isset($_POST['deleteRequest'])){
 			$request->delete();
-			$this->view('home/viewProfessionalProfile', $currentProfile);
+			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
 		}
 		else
-			$this->view('home/viewProfessionalProfile', $currentProfile);
+			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
     }
 }
 

@@ -78,6 +78,12 @@ class ProfessionalController extends Controller
 				$relation->delete();
 				return header('location:/Professional/viewClients');
 			}
+			else if (isset($_POST["0+$currClient->client_id"])){
+				$profile = $this->model('Profile');
+				$currProfile = $profile->currentProfileProfileId($currClient->profile_id);
+				$_SESSION['receiver'] = $currProfile->user_id;
+				return header('location:/Home/writeMessage');
+			}
 		}
 
 		$this->view('home/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);
