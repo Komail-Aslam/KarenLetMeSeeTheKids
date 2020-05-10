@@ -12,7 +12,7 @@
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Profile/ModifyProfile">Profile</a>
 			<a href="/Message/ViewMessages">Messages</a>
-			<a href="/Profile/ModifyProfile">Appointments</a>
+			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
 					echo "<a class='active' href='/Professional/viewProfessionals'>Professionals</a>
@@ -42,7 +42,13 @@
 						echo "<tr><td>$professionalProfile->first_name $professionalProfile->last_name</td>
 								<td><input type='submit' name='$currProfessional->professional_id' value='End Interaction'>
 								<input type='submit' name='0+$currProfessional->professional_id' value='Message'>
-								<input type='submit' name='1+$currProfessional->professional_id' value='Write Review'></td></tr>";
+								<input type='submit' name='1+$currProfessional->professional_id' value='Write Review'>";
+						$request = $this->model('Request');
+						$checkRequest = $request->getRequest($_SESSION['client_id'], $relation->professional_id, "appointment");
+						if ($checkRequest==null)
+							echo "<input type='submit' name='2+$currProfessional->professional_id' value='Request Appointment'></td></tr>";
+						else
+							echo "<input type='submit' name='3+$currProfessional->professional_id' value='Unrequest Appointment'></td></tr>";
 					}
 				}
 			?>

@@ -64,6 +64,20 @@ class ProfessionalController extends Controller
 				$_SESSION['professionalReview'] = $currProfessional->profile_id;
 				return header('location:/Review/writeReview');
 			}
+			else if (isset($_POST["2+$currProfessional->professional_id"])){
+				$request = $this->model('Request');
+				$request->sender_id = $_SESSION['client_id'];
+				$request->receiver_id = $relation->professional_id;
+				$request->insertAppointmentRequest();
+				return header('location:/Professional/viewProfessionals');
+			}
+			else if (isset($_POST["3+$currProfessional->professional_id"])){
+				$request = $this->model('Request');
+				$request->sender_id = $_SESSION['client_id'];
+				$request->receiver_id = $relation->professional_id;
+				$request->delete();
+				return header('location:/Professional/viewProfessionals');
+			}
 		}
 
     	$this->view('home/viewProfessionals', ['relations' => $allRelations]);
@@ -110,7 +124,7 @@ class ProfessionalController extends Controller
 		$reviews = $review->getReviews($professionalProfile->professional_id);
 
 		if (isset($_POST['request'])){
-			$request->insert();
+			$request->insertRelationRequest();
 			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
 		}
 		else if (isset($_POST['deleteRequest'])){

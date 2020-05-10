@@ -12,7 +12,7 @@
 			<a href="/Home/Homepage">Home</a>
 			<a class="active" href="#profile">Profile</a>
 			<a href="/Message/ViewMessages">Messages</a>
-			<a href="/Profile/ModifyProfile">Appointments</a>
+			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
 					echo "<a href='/Professional/viewProfessionals'>Professionals</a>

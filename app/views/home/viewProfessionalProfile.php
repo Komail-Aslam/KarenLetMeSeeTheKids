@@ -12,7 +12,7 @@
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Profile/ModifyProfile">Profile</a>
 			<a href="/Message/ViewMessages">Messages</a>
-			<a href="/Profile/ModifyProfile">Appointments</a>
+			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
 					echo "<a class='active' href='/Professional/viewProfessionals'>Professionals</a>
@@ -28,7 +28,7 @@
 				$professional = $this->model('Professional');
 				$currentProfessional = $professional->getProfessional($pro->profile_id);
 				$req = $this->model('Request');
-				$request = $req->getRequest($_SESSION['client_id'], $currentProfessional->professional_id);
+				$request = $req->getRequest($_SESSION['client_id'], $currentProfessional->professional_id, "relation");
 				if ($request==null)
 					echo "<input type='submit' name='request' value='Request Professional'>"; 
 				else

@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Home Page</title>	
+		<title>Appointments Page</title>	
 	</head>
 
 	<body style="background-color: violet">
@@ -11,8 +11,8 @@
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Profile/ModifyProfile">Profile</a>
-			<a class="active" href="/Message/ViewMessages">Messages</a>
-			<a href="/Appointment/viewAppointments">Appointments</a>
+			<a href="/Message/ViewMessages">Messages</a>
+			<a class="active" href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
 					echo "<a href='/Professional/viewProfessionals'>Professionals</a>
@@ -23,22 +23,41 @@
 			?>
 		</div>
 		<form action="" method="post">
-			<input class="button" type="submit" name="create" value="Compose New Message">
-		</form>
 		<table>
-			<th>From</th>
-			<th>Message</th>
-				<?php
-				foreach($data["messages"] as $messages){
+			<th>Requests</th>
+		<?php
+			if ($data["requests"]!=null){
+				foreach ($data["requests"] as $request) {
+					$client = $this->model('Client');
+					$sender = $client->getClientClientId($request->sender_id);
 					$profile = $this->model('Profile');
-					$sender = $profile->currentProfile($messages[2]);
-					echo "<tr><td style='width: 20%'>$sender->first_name $sender->last_name</td>
-					<td>$messages[1]</td></tr>";
+					$senderProfile=$profile->currentProfileProfileId($sender->profile_id);
+					echo "<tr><td>$senderProfile->first_name $senderProfile->last_name</td>
+							<td><input type='submit' name='0+$sender->profile_id' value='View Profile'>
+							<input type='submit' name='1+$request->sender_id' value='Accept'>
+							<input type='submit' name='2+$request->sender_id' value='Decline'></td></tr>";
 				}
-				?>
-			
-		</table> 
-		
+			}
+		?>
+		</table>
+		<table>
+			<th>Appointments</th>
+			<?php
+			if ($data["appointments"]!=null){
+				foreach ($data["appointments"] as $app) {
+					$c = $this->model('Client');
+					$client = $c->getClientClientId($app->client_id);
+					$profile = $this->model('Profile');
+					$clientProfile=$profile->currentProfileProfileId($client->profile_id);
+					echo "<tr><td>$clientProfile->first_name $clientProfile->last_name | $app->appLocation | $app->appDate | $app->appTime</td>
+							<td><input type='submit' name='3+$client->profile_id' value='View Profile'>
+							<input type='submit' name='$app->appointment_id' value='Modify'>
+							<input type='submit' name='1+$app->appointment_id' value='Cancel'></td></tr>";
+				}
+			}
+			?>
+		</table>
+	</form>
 	</div>
 	</body>
 </html>
@@ -56,18 +75,6 @@
 	td {
 		border: 1px solid black;
 	}
-	.button {
-		  background-color: violet; /* Green */
-		  border: 3px solid black;
-		  color: black;
-		  padding: 15px 32px;
-		  text-align: center;
-		  text-decoration: none;
-		 display: inline-block;
-		 font-size: 16px;
-		 margin-top: 20px;
-	}
-	
 	.main {
 		padding: 60px 80px;
 		width: 70%;
