@@ -6,7 +6,7 @@
 		<title>Welcome Page</title>	
 	</head>
 
-	<body style="background-color: violet">
+	<body style="background-color: pink">
 		<a href='/Home/Logout'>Logout</a>
 		<center><h1>Welcome To KarenLetMeSeeTheKids</h1></center>
 	<div class="login" style="background-color: lightblue">

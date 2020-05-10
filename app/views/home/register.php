@@ -5,7 +5,7 @@
 	</style>
 	<title>Register</title>
 </head>
-<body style="background-color: violet">
+<body style="background-color: pink">
 	<center><h1>Karen Let Me See The Kids</h1></center>
 	<div class="login" style="background-color: lightblue"><center>
 		<h2><b><u>Register</u></b></h2>

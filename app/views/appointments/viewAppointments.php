@@ -6,7 +6,7 @@
 		<title>Appointments Page</title>	
 	</head>
 
-	<body style="background-color: violet">
+	<body style="background-color: pink">
 		<a href='/Home/Logout'>Logout</a>
 		<h1>KarenLetMeSeeTheKids</h1>
 		
