@@ -1,5 +1,8 @@
 <html>
 	<head>
+		<style>
+		<?php include '/xampp/app/views/styles.css'; ?>
+		</style>
 		<title>Client Profile Page</title>	
 	</head>
 
@@ -30,34 +33,6 @@
 	</center>
 	</div>
 	</body>
-
-
-<style type="text/css">
-	div {
-		padding: 60px 80px;
-		width: 400px;
-		margin: auto;
-		border: 4px solid black;
-		position: relative;
-		
-	}
-	h1 {
-		font-size:40px;
-		padding-top: 30px;
-	}
-
-	h2 {
-		margin-top: 10px;
-	}
-	p {
-		color: red;
-	}
-	ul {
-		text-align: right;
-		margin-right: auto;
-		width: 80%;
-	}
-</style>
 </html>
 <?php
 	unset($_SESSION["error"]);

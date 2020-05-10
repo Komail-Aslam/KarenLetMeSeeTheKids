@@ -1,5 +1,8 @@
 <html>
 	<head>
+		<style>
+			<?php include '/xampp/app/views/styles.css'; ?>
+		</style>
 		<title>Home Page</title>	
 	</head>
 
@@ -42,7 +45,7 @@
 							Child Therapist: <input type='radio' name='professional_type' value='Child Therapist'"; if ($profession=="Child Therapist"){echo "checked";} echo"></ul>
 							<ul><b>Education: <input type='text' name='education' value='$pro->education'><br></ul>
 							<ul>Years of Experience: <input type='text' name='years' value='$pro->years'><br></ul>
-							<input type='submit' name='action' value='Save' style='margin-left: 75%'>";
+							<input type='submit' name='action' value='Save'>";
 					?>
 					<?php
 					$review = $this->model('Review');
@@ -76,76 +79,19 @@
 </html>
 
 <style type="text/css">
-	table {
-		padding: 5px;
-		font-size: 25px;
-		width: 170%;
-		text-align: center;	
-	}
-	th {
-		font-size: 30px;
-	}
-	td {
-		border: 1px solid black;
-	}
-	t {
-		padding-left: 50px;
+	form {
+		margin-top: 70px;
+		margin-right: 25%;
 	}
 	input[type=text] {
 	    border: 1px solid black;
 	    border-radius: 3px;
 	    padding: 6px 20px;
 	}
-	.main {
-		padding: 60px 80px;
-		width: 70%;
-		height: auto;
-		min-height: 400px;
-		margin: auto;
-		border: 4px solid black;
-		position: relative;
-		
-	}
-	a {
-		float: right;
-		margin-top: 10px;
-		margin-right: 10px;
-		font-size: 20px;
-	}
-	h1 {
-		font-size:40px;
-		padding-top: 30px;
-		text-align: center;
-		margin-left: 30px;
-	}
-	.topnav {
-	  	overflow: hidden;
-	  	margin-top: -40px;
-	  	margin-left: 15%;
-
-	}
-	.topnav a {
-		float: left;
-		color: black;
-		text-align: center;
-		padding: 14px 16px;
-		text-decoration: none;
-		font-size: 17px;
-	}
-	.topnav a:hover {
-	    background-color: #ddd;
-	    color: black;
-	}
-	.topnav a.active {
-	    background-color: violet;
-	    border-style: solid;
-	    color: black;
-	}
-	ul {
-		text-align: right;
-	}
-	form {
-		margin-top: 70px;
-		margin-right: 40%;
+	form input[type=submit] {
+	    border: 1px solid black;
+	    border-radius: 3px;
+	    padding: 6px 20px;
+	    margin-right: 100px;
 	}
 </style>

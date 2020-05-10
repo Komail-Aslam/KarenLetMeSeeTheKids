@@ -1,5 +1,8 @@
 <html>
 	<head>
+		<style>
+			<?php include '/xampp/app/views/styles.css'; ?>
+		</style>
 		<title>Home Page</title>	
 	</head>
 
@@ -30,9 +33,9 @@
 				$req = $this->model('Request');
 				$request = $req->getRequest($_SESSION['client_id'], $currentProfessional->professional_id, "relation");
 				if ($request==null)
-					echo "<input type='submit' name='request' value='Request Professional'>"; 
+					echo "<input class='b1' type='submit' name='request' value='Request Professional'>"; 
 				else
-					echo "<input type='submit' name='deleteRequest' value='Delete Request Professional'>"; 
+					echo "<input class='b1' type='submit' name='deleteRequest' value='Delete Request'>"; 
 			?>
 		</form>
 		<table style="padding-top: 30px;">
@@ -76,62 +79,3 @@
 	</div>
 	</body>
 </html>
-
-<style type="text/css">
-	table {
-		padding: 5px;
-		font-size: 25px;
-		width: 100%;
-		text-align: center;	
-	}
-	th {
-		font-size: 30px;
-	}
-	td {
-		border: 1px solid black;
-	}
-	.main {
-		padding: 60px 80px;
-		width: 70%;
-		height: 70%;
-		margin: auto;
-		border: 4px solid black;
-		position: relative;
-		
-	}
-	a {
-		float: right;
-		margin-top: 10px;
-		margin-right: 10px;
-		font-size: 20px;
-	}
-	h1 {
-		font-size:40px;
-		padding-top: 30px;
-		text-align: center;
-		margin-left: 30px;
-	}
-	.topnav {
-	  	overflow: hidden;
-	  	margin-top: -40px;
-	  	margin-left: 15%;
-
-	}
-	.topnav a {
-		float: left;
-		color: black;
-		text-align: center;
-		padding: 14px 16px;
-		text-decoration: none;
-		font-size: 17px;
-	}
-	.topnav a:hover {
-	    background-color: #ddd;
-	    color: black;
-	}
-	.topnav a.active {
-	    background-color: violet;
-	    border-style: solid;
-	    color: black;
-	}
-</style>

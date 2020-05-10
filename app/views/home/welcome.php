@@ -1,12 +1,15 @@
 <html>
 	<head>
+		<style>
+			<?php include '/xampp/app/views/styles.css'; ?>
+		</style>
 		<title>Welcome Page</title>	
 	</head>
 
 	<body style="background-color: violet">
 		<a href='/Home/Logout'>Logout</a>
 		<center><h1>Welcome To KarenLetMeSeeTheKids</h1></center>
-	<div style="background-color: lightblue">
+	<div class="login" style="background-color: lightblue">
 		<center><h2>Please enter the following details to create your profile.</h2>
 		<form action="" method="post">
 			<ul>First Name: <input type="text" name="first_name"></ul>
@@ -32,35 +35,10 @@
 </html>
 
 <style type="text/css">
-	div {
-		padding: 60px 80px;
-		width: 400px;
-		margin: auto;
-		border: 4px solid black;
-		position: relative;
-		
-	}
-	h1 {
-		font-size:40px;
-		padding-top: 30px;
-	}
-
-	h2 {
-		margin-top: 10px;
-	}
-	p {
-		color: red;
-	}
 	ul {
 		text-align: right;
 		margin-right: auto;
 		width: 70%;
-	}
-	a {
-		float: right;
-		margin-top: 10px;
-		margin-right: 10px;
-		font-size: 20px;
 	}
 </style>
 <?php
