@@ -55,9 +55,15 @@ class AppointmentController extends Controller{
 			$requests = $request->getAppRequestsClient($_SESSION['client_id']);
 
 			foreach ($requests as $request) {
+				$pro = $this->model('Professional');
+				$currentPro = $pro->getProfessionalProfessionalId($request->receiver_id);
 				if (isset($_POST["2+$request->sender_id"])){
 					$request->delete();
 					return header('location:/Appointment/viewAppointments');
+				}
+				else if (isset($_POST["0+$currentPro->profile_id"])){
+					$_SESSION['viewProfessionalProfileId'] = $currentPro->profile_id;
+					return header('location:/Professional/viewProfessionalProfile');
 				}
 			}
 

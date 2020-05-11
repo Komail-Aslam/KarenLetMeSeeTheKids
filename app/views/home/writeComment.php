@@ -38,8 +38,17 @@
 		<form action="" method="post">
 			Comment: <input type="text" name="comment"><br><br>
 			<input type="submit" name="write_comment" value="Post Comment">
+			<?php
+				if (isset($_SESSION['error'])){
+					$error = $_SESSION['error'];
+					echo "<p>$error</p>";
+				}
+			?>
 		</form>
 
 	</div>
 	</body>
 </html>
+<?php
+	unset($_SESSION["error"]);
+?>

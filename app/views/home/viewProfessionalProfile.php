@@ -32,8 +32,14 @@
 				$currentProfessional = $professional->getProfessional($pro->profile_id);
 				$req = $this->model('Request');
 				$request = $req->getRequest($_SESSION['client_id'], $currentProfessional->professional_id, "relation");
+				$relation = $this->model('Relation');
+				$checkRelation = $relation->getRelation($_SESSION['client_id'], $currentProfessional->professional_id);
+				if ($checkRelation != null)
+					$disabledStatus = "disabled";
+				else
+					$disabledStatus = "enabled";
 				if ($request==null)
-					echo "<input class='b1' type='submit' name='request' value='Request Professional'>"; 
+					echo "<input class='b1' type='submit' name='request' value='Request Professional' $disabledStatus>"; 
 				else
 					echo "<input class='b1' type='submit' name='deleteRequest' value='Delete Request'>"; 
 			?>

@@ -13,7 +13,7 @@
 	<div class="main" style="background-color: lightblue">
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
-			<a href="/Profile/ModifyProfile">Profile</a>
+			<a class='active' href="/Profile/ModifyProfile">Profile</a>
 			<a href="/Message/ViewMessages">Messages</a>
 			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
@@ -33,6 +33,16 @@
 		?>
 		Enter the comment below:<br><input type="text" name="reviewComment">
 		<input type="submit" name="writeComment" value="Write Comment">
+		<?php
+			if (isset($_SESSION['error'])){
+				$error = $_SESSION['error'];
+				echo "<p>$error</p>";
+			}			
+		?>
 	</div>
 	</body>
 </html>
+
+<?php
+	unset($_SESSION["error"]);
+?>

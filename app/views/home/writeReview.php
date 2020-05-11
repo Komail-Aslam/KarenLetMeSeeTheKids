@@ -33,6 +33,15 @@
 		?>
 		Enter the review below:<br><input type="text" name="reviewContent">
 		<input type="submit" name="writeReview" value="Write Review">
+		<?php
+			if (isset($_SESSION['error'])){
+				$error = $_SESSION['error'];
+				echo "<p>$error</p>";
+			}
+		?>
 	</div>
 	</body>
 </html>
+<?php
+	unset($_SESSION['error'])
+?>

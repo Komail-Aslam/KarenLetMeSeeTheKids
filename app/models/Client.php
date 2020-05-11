@@ -29,7 +29,7 @@
         }
 
         function getClientProfessionalType($professional_type){
-        	$sql = 'SELECT * FROM Client WHERE professional_type = :professional_type';
+        	$sql = "SELECT * FROM Client WHERE professional_type = '%$professional_type%'";
 	        $stmt = self::$_connection->prepare($sql);
 	        $stmt->execute(['professional_type'=>$professional_type]);
 	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Client');

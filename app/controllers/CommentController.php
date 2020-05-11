@@ -10,12 +10,18 @@ class CommentController extends Controller
 		$currentPost = $post->getPost($_SESSION['comment_post']);
 
 		if (isset($_POST['write_comment'])){
-			$comment = $this->model('Comments');
-			$comment->commenter_id = $_SESSION['profile_id'];
-			$comment->post_id = $_SESSION['comment_post'];
-			$comment->comment = $_POST['comment'];
-			$comment->insert();
-			return header('location:/Home/homepage');
+			if ($_POST['comment'] == null || ctype_space($_POST['comment'])){
+                $_SESSION['error'] = "Error: The comment must contain text.";
+                $this->view('home/writeComment', $currentPost);
+            }
+            else {
+				$comment = $this->model('Comments');
+				$comment->commenter_id = $_SESSION['profile_id'];
+				$comment->post_id = $_SESSION['comment_post'];
+				$comment->comment = $_POST['comment'];
+				$comment->insert();
+				return header('location:/Home/homepage');
+			}
 		}
 		else
 			$this->view('home/writeComment', $currentPost);   	
@@ -23,12 +29,18 @@ class CommentController extends Controller
 
     public function writeReviewComment(){
     	if (isset($_POST['writeComment'])){
-    		$reviewComment = $this->model('ReviewComment');
-    		$reviewComment->professional_id = $_SESSION['professional_id'];
-    		$reviewComment->review_id = $_SESSION['reviewCommentId'];
-    		$reviewComment->comment = $_POST['reviewComment'];
-    		$reviewComment->insert();
-    		header('location:/Profile/modifyProfile');
+    		if ($_POST['reviewComment'] == null || ctype_space($_POST['reviewComment'])){
+    			$_SESSION['error'] = "Error: The comment must contain text.";
+    			$this->view('home/writeReviewComment');
+    		}
+    		else {
+	    		$reviewComment = $this->model('ReviewComment');
+	    		$reviewComment->professional_id = $_SESSION['professional_id'];
+	    		$reviewComment->review_id = $_SESSION['reviewCommentId'];
+	    		$reviewComment->comment = $_POST['reviewComment'];
+	    		$reviewComment->insert();
+	    		header('location:/Profile/modifyProfile');
+	    	}
     	}
     	$this->view('home/writeReviewComment');
     }

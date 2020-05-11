@@ -27,14 +27,23 @@
 		</div>
 
 		<?php
-			echo "<p style='padding-top: 50px'>Send to: $data->first_name $data->last_name</p>";
+			echo "<t style='padding-top: 50px'>Send to: $data->first_name $data->last_name</t>";
 		?>
 
 		<form action="" method="post">
 			Message: <input type="text" name="message"><br><br>
 			<input type="submit" name="send_message" value="Send Message">
+			<?php
+			if (isset($_SESSION['error'])){
+				$error = $_SESSION['error'];
+				echo "<p>$error</p>";
+			}
+			?>
 		</form>
 
 	</div>
 	</body>
 </html>
+<?php
+	unset($_SESSION["error"]);
+?>

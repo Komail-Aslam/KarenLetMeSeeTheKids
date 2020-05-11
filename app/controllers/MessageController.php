@@ -20,14 +20,40 @@ class MessageController extends Controller{
     public function createMessage(){
 
     	if (isset($_POST['search'])){
-    		$search = $_POST['receiver'];
-	    	$profile = $this->model('Profile');
-	   		$profiles = $profile->search($search);
-    		$this->view('home/createMessage', ['profiles' => $profiles]);
+            if ($_POST['receiver'] == null || ctype_space($_POST['receiver'])){
+                $_SESSION['error'] = "Please enter a name to search.";
+                $this->view('home/createMessage');
+            }
+            else {
+        		$search = $_POST['receiver'];
+    	    	$profile = $this->model('Profile');
+    	   		$profiles = $profile->search($search);
+                $client = $this->model('Client');
+                $searchClients = array();
+                foreach ($profiles as $profile) {
+                    $currentClient = $client->getClient($profile->profile_id);
+                    if ($currentClient != null)
+                        array_push($searchClients, $profile);
+                    if (isset($_SESSION['client_id'])){
+                        $professional = $this->model('Professional');
+                        $pro = $professional->getProfessional($profile->profile_id);
+                        if ($pro != null){
+                            $relation = $this->model('Relation');
+                            $checkRelation = $relation->getRelation($_SESSION['client_id'], $pro->professional_id);
+                            if ($checkRelation != null)
+                                array_push($searchClients, $profile);
+                        }
+                    }
+                }
+                if (isset($_SESSION['professional_id']))
+                    $this->view('home/createMessage', ['profiles' => $profiles]);
+                else
+        		    $this->view('home/createMessage', ['profiles' => $searchClients]);
+            }
     	}
     	else if (isset($_POST['proceed'])){
     		if (!isset($_POST['search_select'])){
-    			$_SESSION['error'] = "Please select someone to send the message to.";
+    			$_SESSION['error'] = "Please search and select someone to send the message to.";
 				$this->view('home/createMessage');
 			}
 			else {
@@ -43,14 +69,21 @@ class MessageController extends Controller{
     public function writeMessage(){
     	$profile = $this->model('Profile');
 		$receiver = $profile->currentProfile($_SESSION['receiver']);
-    	$this->view('home/writeMessage', $receiver);
     	if (isset($_POST['send_message'])){
-    		$message = $this->model('Messages');
-    		$message->sender = $_SESSION['user_id'];
-    		$message->receiver = $_SESSION['receiver'];
-    		$message->message = $_POST['message'];
-    		$message->insert();
-    		return header('location:/Message/viewMessages');
+            if ($_POST['message'] == null || ctype_space($_POST['message'])){
+                $_SESSION['error'] = "Error: The message must contain text.";
+                $this->view('home/writeMessage', $receiver);
+            }
+            else {
+        		$message = $this->model('Messages');
+        		$message->sender = $_SESSION['user_id'];
+        		$message->receiver = $_SESSION['receiver'];
+        		$message->message = $_POST['message'];
+        		$message->insert();
+        		return header('location:/Message/viewMessages');
+            }
     	}
+        else
+            $this->view('home/writeMessage', $receiver);
     }
 }

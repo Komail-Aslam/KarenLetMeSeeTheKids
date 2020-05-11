@@ -33,8 +33,14 @@
 			<ul>City: <input type="text" name="city" value="<?php echo$data->city?>"></ul>
 			<ul>Country: <input type="text" name="country" value="<?php echo$data->country?>"></ul>
 			<?php
-				if(isset($_SESSION["client_id"]))
+				if(isset($_SESSION["client_id"])){
 					echo "<input type='submit' name='action' value='Save' style='margin-left: 75%'>";
+					if (isset($_SESSION['error'])){
+						$error = $_SESSION['error'];
+						echo "<p>$error</p>";
+					}
+				}
+			
 				if (isset($_SESSION["professional_id"])){
 					$professional = $this->model('Professional');
 					$pro = $professional->getProfessionalProfessionalId($_SESSION["professional_id"]);
@@ -46,6 +52,12 @@
 							<ul><b>Education: <input type='text' name='education' value='$pro->education'><br></ul>
 							<ul>Years of Experience: <input type='text' name='years' value='$pro->years'><br></ul>
 							<input type='submit' name='action' value='Save'>";
+
+						if (isset($_SESSION['error'])){
+							$error = $_SESSION['error'];
+							echo "<p>$error</p>";
+						}
+			
 					?>
 					<?php
 					$review = $this->model('Review');
@@ -77,6 +89,10 @@
 	</div>
 	</body>
 </html>
+
+<?php
+	unset($_SESSION["error"]);
+?>
 
 <style type="text/css">
 	form {

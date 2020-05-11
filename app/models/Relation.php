@@ -28,6 +28,14 @@
 	        return $stmt->fetchAll();
         }
 
+        function getRelation($client_id, $professional_id){
+        	$sql = 'SELECT * FROM Relations WHERE client_id = :client_id AND professional_id = :professional_id';
+	        $stmt = self::$_connection->prepare($sql);
+	        $stmt->execute(['client_id'=>$client_id, 'professional_id'=>$professional_id]);
+	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Relation');
+	        return $stmt->fetch();
+        }
+
         function delete(){
         	$sql = 'DELETE FROM Relations WHERE client_id = :client_id AND professional_id = :professional_id';
 	        $stmt = self::$_connection->prepare($sql);

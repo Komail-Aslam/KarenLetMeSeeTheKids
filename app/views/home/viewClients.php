@@ -29,6 +29,12 @@
 		<form action="" method="post">
 			<input type="text" name="search_client">
 			<input type="submit" name="search" value="Search for Client">
+			<?php
+				if (isset($_SESSION['error'])){
+					$error = $_SESSION['error'];
+					echo "$error";
+				}
+			?>
 		<table>
 		<th>Requests</th>
 		<?php
@@ -49,7 +55,7 @@
 	<table>
 		<th>Clients</th>
 		<?php
-			if ($data["relations"]!=null){
+			if (isset($data["relations"])){
 				$client = $this->model('Client');
 				$profile = $this->model('Profile');
 				foreach ($data["relations"] as $relation) {
@@ -70,3 +76,6 @@
 	</div>
 	</body>
 </html>
+<?php
+	unset($_SESSION['error']);
+?>

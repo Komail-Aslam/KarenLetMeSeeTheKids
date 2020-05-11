@@ -28,7 +28,12 @@
 		<form action="" method="post">
 			<input type="text" name="search_professional">
 			<input type="submit" name="search" value="Search for Professional">
-
+			<?php
+				if (isset($_SESSION['error'])){
+					$error = $_SESSION['error'];
+					echo "$error";
+				}
+			?>
 			<table>
 			<th>Professionals</th>
 			<?php
@@ -43,7 +48,8 @@
 						// $profile = $this->model('Profile');
 						// $senderProfile = $profile->currentProfileProfileId($sender->profile_id);
 						echo "<tr><td>$professionalProfile->first_name $professionalProfile->last_name</td>
-								<td><input type='submit' name='$currProfessional->professional_id' value='End Interaction'>
+								<td><input type='submit' name='4+$currProfessional->professional_id' value='View Profile'>
+								<input type='submit' name='$currProfessional->professional_id' value='End Interaction'>
 								<input type='submit' name='0+$currProfessional->professional_id' value='Message'>
 								<input type='submit' name='1+$currProfessional->professional_id' value='Write Review'>";
 						$request = $this->model('Request');
@@ -61,3 +67,6 @@
 	</div>
 	</body>
 </html>
+<?php
+	unset($_SESSION["error"]);
+?>

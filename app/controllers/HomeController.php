@@ -160,11 +160,17 @@ class HomeController extends Controller
     		return header('location:/Home/Login');
 
     	if (isset($_POST['post'])) {
-    		$post = $this->model('Post');
-    		$post->client_id = $_SESSION['client_id'];
-    		$post->post_content = $_POST['post_content'];
-    		$post->insert();
-    		header('location:/Home/homepage');
+            if ($_POST['post_content'] == null || ctype_space($_POST['post_content'])){
+                $_SESSION['error'] = "Error: The post must contain text.";
+                $this->view('home/writePost');
+            }
+            else {
+        		$post = $this->model('Post');
+        		$post->client_id = $_SESSION['client_id'];
+        		$post->post_content = $_POST['post_content'];
+        		$post->insert();
+        		header('location:/Home/homepage');
+            }
     	}
     	else
     		$this->view('home/writePost');

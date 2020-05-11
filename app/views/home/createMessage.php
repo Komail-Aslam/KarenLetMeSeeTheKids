@@ -27,16 +27,21 @@
 		</div>
 		<h2>Who would you like to message?</h2>
 			<form action="" method="post">
-				<ul>Send to: <input type='text' name='receiver' /></ul>
+				Send to: <input type='text' name='receiver' />
 				<input type="submit" name="search" value="Search">
 			</form>
 			<form action="" method="post">
 				<?php
-					if ($data != null){
+				if (isset($data["profiles"])){
+					if (count($data["profiles"]) > 0){
 						foreach($data["profiles"] as $profile){
 							echo "$profile->first_name $profile->last_name<input type='radio' name='search_select' value=$profile->user_id>";
 						}
 					}
+					else
+						echo "No profiles found";
+				}
+					
 				?>
 				<br /><br />
 				<input type="submit" name="proceed" value="Write Message">

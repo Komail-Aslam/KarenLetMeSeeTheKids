@@ -42,7 +42,7 @@ class ProfessionalController extends Controller
 		   	if ($profiles!=null || $professionals!=null)
     			header('location:/Professional/searchProfessional');
     		else{
-    			//error
+    			$_SESSION['error'] = "No profiles found.";
     			$this->view('home/viewProfessionals', ['relations' => $allRelations]);
     		}
 		}
@@ -78,6 +78,10 @@ class ProfessionalController extends Controller
 				$request->delete();
 				return header('location:/Professional/viewProfessionals');
 			}
+			else if (isset($_POST["4+$currProfessional->professional_id"])){
+				$_SESSION['viewProfessionalProfileId'] = $currProfessional->profile_id;
+				return header('location:/Professional/viewProfessionalProfile');
+			}
 		}
 
     	$this->view('home/viewProfessionals', ['relations' => $allRelations]);
@@ -85,7 +89,8 @@ class ProfessionalController extends Controller
 
     public function searchProfessional(){
     	$search = $_SESSION['professional_search'];
-
+    	$professional = $this->model('Professional');
+		$professionals = $professional->getProfessionalProfession($search);
 		$profile = $this->model('Profile');
 	   	$profiles = $profile->search($search);
 	   	if ($profiles!=null){
@@ -97,11 +102,8 @@ class ProfessionalController extends Controller
 				}
 			}
 	   	}
-
-		$professional = $this->model('Professional');
-		$professionals = $professional->getProfessionalProfession($search);
-		if ($professionals!=null){
-			$this->view('Professional/searchProfessional', ['professionals'=> $professionals]);
+		else if ($professionals!=null){
+			$this->view('home/searchProfessional', ['professionals'=> $professionals]);
 			foreach ($professionals as $professional) {
 				if (isset($_POST[$professional->profile_id])){
 					$_SESSION['viewProfessionalProfileId'] = $professional->profile_id;

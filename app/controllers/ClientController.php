@@ -43,8 +43,8 @@ class ClientController extends Controller{
 		   	if ($profiles!=null || $clients!=null)
     			header('location:/Client/searchClient');
     		else{
-    			//error
-    			$this->view('home/viewClients', ['requests' => $allRequests]);
+    			$_SESSION['error'] = "No profiles found.";
+    			$this->view('home/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);
     		}
 		}
 

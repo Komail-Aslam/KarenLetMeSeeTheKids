@@ -31,7 +31,7 @@
         }
 
         function getProfessionalProfession($profession){
-        	$sql = 'SELECT * FROM Professional WHERE profession = :profession';
+        	$sql = "SELECT * FROM Professional WHERE profession LIKE '%$profession%'";
 	        $stmt = self::$_connection->prepare($sql);
 	        $stmt->execute(['profession'=>$profession]);
 	        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Professional');

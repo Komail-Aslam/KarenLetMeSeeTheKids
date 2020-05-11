@@ -31,12 +31,12 @@
 		<?php
 			if ($data["requests"]!=null){
 				foreach ($data["requests"] as $request) {
-					$client = $this->model('Client');
-					$sender = $client->getClientClientId($request->sender_id);
+					$pro = $this->model('Professional');
+					$receiver = $pro->getProfessionalProfessionalId($request->receiver_id);
 					$profile = $this->model('Profile');
-					$senderProfile=$profile->currentProfileProfileId($sender->profile_id);
+					$senderProfile=$profile->currentProfileProfileId($receiver->profile_id);
 					echo "<tr><td>$senderProfile->first_name $senderProfile->last_name</td>
-							<td><input type='submit' name='0+$sender->profile_id' value='View Profile'>
+							<td><input type='submit' name='0+$receiver->profile_id' value='View Profile'>
 							<input type='submit' name='2+$request->sender_id' value='Delete'></td></tr>";
 				}
 			}
