@@ -8,7 +8,7 @@
 
 	<body style="background-color: pink">
 		<center><h1>Welcome To KarenLetMeSeeTheKids</h1></center>
-	<div style="background-color: lightblue">
+	<div class="login" style="background-color: lightblue">
 
 		<?php 
 		echo "<center><h2>Welcome $data->first_name, please answer the following question to finish creating your profile.</h2>";

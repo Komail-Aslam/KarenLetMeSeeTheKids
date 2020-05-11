@@ -14,27 +14,22 @@
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Profile/ModifyProfile">Profile</a>
-			<a href="/Message/ViewMessages">Messages</a>
+			<a href="/Home/ViewMessages">Messages</a>
 			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
 					echo "<a href='/Professional/viewProfessionals'>Professionals</a>
-						<a href='/Logbook/viewLogbook'>Logbook</a>";
+						<a class='active' href='/Logbook/viewLogbook'>Logbook</a>";
 				}
 				else
-					echo "<a class='active' href='/Client/viewClients'>Clients</a>";
+					echo "<a href='/Client/viewClients'>Clients</a>";
 			?>
 		</div>
-		<table style="padding-top: 30px;">
-		<?php
-			$client = $this->model('client');
-			$currentClient = $client->getClient($data->profile_id);
-			echo "<tr><td>Name: </td><td>$data->first_name $data->last_name</td></tr>
-					<tr><td>Email: </td><td>$data->email</td></tr>
-					<tr><td>Location: </td><td>$data->city, $data->country</td></tr>
-					<tr><td>Seeking Profession: </td><td>$currentClient->professional_type</td></tr>";
-		?>
-		</table>
+		<form action="" method="post">
+			Log Title: <input type="text" name="log_title">
+			Log Entry: <input type="text" name="log_content">
+			<input type="submit" name="writeLog" value="Write Log">
+		</form>
 	</div>
 	</body>
 </html>

@@ -19,7 +19,7 @@
 			<?php
 				if (isset($_SESSION['client_id'])){
 					echo "<a href='/Professional/viewProfessionals'>Professionals</a>
-						<a href='/Home/ModifyProfile'>Logbook</a>";
+						<a href='/Logbook/viewLogbook'>Logbook</a>";
 				}
 				else
 					echo "<a href='/Client/viewClients'>Clients</a>";

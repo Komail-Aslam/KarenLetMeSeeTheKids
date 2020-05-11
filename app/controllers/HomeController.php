@@ -117,10 +117,10 @@ class HomeController extends Controller
 
     	$profile = $this->model('Profile');
     	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
-    	
+    	$_SESSION['profile_id'] = $currentProfile->profile_id;
 
     	$client = $this->model('Client');
-    	$currentClient = $client->getClient($_SESSION['profile_id']);
+    	$currentClient = $client->getClient($_SESSION["profile_id"]);
     	if ($currentClient != null)
     		$_SESSION["client_id"] = $currentClient->client_id;
     	else {

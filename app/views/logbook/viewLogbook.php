@@ -14,27 +14,30 @@
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Profile/ModifyProfile">Profile</a>
-			<a href="/Message/ViewMessages">Messages</a>
+			<a href="/Home/ViewMessages">Messages</a>
 			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
 					echo "<a href='/Professional/viewProfessionals'>Professionals</a>
-						<a href='/Logbook/viewLogbook'>Logbook</a>";
+						<a class='active' href='/Logbook/viewLogbook'>Logbook</a>";
 				}
 				else
-					echo "<a class='active' href='/Client/viewClients'>Clients</a>";
+					echo "<a href='/Client/viewClients'>Clients</a>";
 			?>
 		</div>
-		<table style="padding-top: 30px;">
-		<?php
-			$client = $this->model('client');
-			$currentClient = $client->getClient($data->profile_id);
-			echo "<tr><td>Name: </td><td>$data->first_name $data->last_name</td></tr>
-					<tr><td>Email: </td><td>$data->email</td></tr>
-					<tr><td>Location: </td><td>$data->city, $data->country</td></tr>
-					<tr><td>Seeking Profession: </td><td>$currentClient->professional_type</td></tr>";
-		?>
-		</table>
+		<form method="post" action="">
+			<input class="b1" type="submit" name="writeLogbook" value="Insert New Entry">
+			<table>
+				<caption><b><u>My Logbook</u></b></caption>
+				<th>Title</th>
+				<th>Entry</th>
+			<?php
+				foreach($data["logbook"] as $log){
+				echo "<tr><td>$log->log_title</td><td>$log->log_content</td></tr>";
+			}
+			?>
+			</table>
+		</form>
 	</div>
 	</body>
 </html>
