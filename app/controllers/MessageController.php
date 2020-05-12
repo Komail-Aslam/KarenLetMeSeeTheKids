@@ -22,7 +22,7 @@ class MessageController extends Controller{
     	if (isset($_POST['create']))
     		return header('location:/Message/createMessage');
 
-		$this->view('home/viewMessages', ['messages' => $messages]);
+		$this->view('messages/viewMessages', ['messages' => $messages]);
     }
 
     public function createMessage(){
@@ -30,7 +30,7 @@ class MessageController extends Controller{
     	if (isset($_POST['search'])){
             if ($_POST['receiver'] == null || ctype_space($_POST['receiver'])){
                 $_SESSION['error'] = "Please enter a name to search.";
-                $this->view('home/createMessage');
+                $this->view('messages/createMessage');
             }
             else {
         		$search = $_POST['receiver'];
@@ -54,15 +54,15 @@ class MessageController extends Controller{
                     }
                 }
                 if (isset($_SESSION['professional_id']))
-                    $this->view('home/createMessage', ['profiles' => $profiles]);
+                    $this->view('messages/createMessage', ['profiles' => $profiles]);
                 else
-        		    $this->view('home/createMessage', ['profiles' => $searchClients]);
+        		    $this->view('messages/createMessage', ['profiles' => $searchClients]);
             }
     	}
     	else if (isset($_POST['proceed'])){
     		if (!isset($_POST['search_select'])){
     			$_SESSION['error'] = "Please search and select someone to send the message to.";
-				$this->view('home/createMessage');
+				$this->view('messages/createMessage');
 			}
 			else {
 			   	$_SESSION['receiver'] = $_POST['search_select'];
@@ -70,7 +70,7 @@ class MessageController extends Controller{
 			}
     	}
     	else {
-			$this->view('home/createMessage');
+			$this->view('messages/createMessage');
     	}
     }
 
@@ -80,7 +80,7 @@ class MessageController extends Controller{
     	if (isset($_POST['send_message'])){
             if ($_POST['message'] == null || ctype_space($_POST['message'])){
                 $_SESSION['error'] = "Error: The message must contain text.";
-                $this->view('home/writeMessage', $receiver);
+                $this->view('messages/writeMessage', $receiver);
             }
             else {
         		$message = $this->model('Messages');
@@ -92,6 +92,6 @@ class MessageController extends Controller{
             }
     	}
         else
-            $this->view('home/writeMessage', $receiver);
+            $this->view('messages/writeMessage', $receiver);
     }
 }

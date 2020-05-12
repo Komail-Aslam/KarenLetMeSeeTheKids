@@ -17,7 +17,7 @@ class ReviewController extends Controller{
     	if (isset($_POST['writeReview'])){
             if ($_POST['reviewContent'] == null || ctype_space($_POST['reviewContent'])){
                 $_SESSION['error'] = "Error: The review must contain text.";
-                $this->view('home/writeReview', $_SESSION['professionalReview']);
+                $this->view('reviews/writeReview', $_SESSION['professionalReview']);
             }
             else {
         		$review = $this->model('Review');
@@ -29,7 +29,7 @@ class ReviewController extends Controller{
             }
     	}
         else
-    	   $this->view('home/writeReview', $_SESSION['professionalReview']);
+    	   $this->view('reviews/writeReview', $_SESSION['professionalReview']);
     }
 	
 }

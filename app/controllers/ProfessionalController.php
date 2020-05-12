@@ -20,7 +20,7 @@ class ProfessionalController extends Controller
     	if (isset($_POST['action'])){
     		if (!isset($_POST['professional_type']) || $_POST['education'] == null || ($_POST['years']) == null){
     			$_SESSION["error"] = "Please enter all of the information.";
-	    		$this->view('home/professionalProfileCreate', $currentProfile);
+	    		$this->view('professionals/professionalProfileCreate', $currentProfile);
 	    	}
 	    	else {
 	    		$professional = $this->model('Professional');
@@ -33,7 +33,7 @@ class ProfessionalController extends Controller
 	    	}
     	}
     	else
-    		$this->view('home/professionalProfileCreate', $currentProfile);
+    		$this->view('professionals/professionalProfileCreate', $currentProfile);
 	}
 
 	public function viewProfessionals(){
@@ -53,7 +53,7 @@ class ProfessionalController extends Controller
     			header('location:/Professional/searchProfessional');
     		else{
     			$_SESSION['error'] = "No profiles found.";
-    			$this->view('home/viewProfessionals', ['relations' => $allRelations]);
+    			$this->view('professionals/viewProfessionals', ['relations' => $allRelations]);
     		}
 		}
 
@@ -108,7 +108,7 @@ class ProfessionalController extends Controller
 			}
 		}
 
-    	$this->view('home/viewProfessionals', ['relations' => $allRelations, 'requests'=>$allRequests]);
+    	$this->view('professionals/viewProfessionals', ['relations' => $allRelations, 'requests'=>$allRequests]);
     }
 
     public function searchProfessional(){
@@ -118,7 +118,7 @@ class ProfessionalController extends Controller
 		$profile = $this->model('Profile');
 	   	$profiles = $profile->search($search);
 	   	if ($profiles!=null){
-			$this->view('home/searchProfessional', ['profiles'=> $profiles]);
+			$this->view('professionals/searchProfessional', ['profiles'=> $profiles]);
 			foreach ($profiles as $profile) {
 				if (isset($_POST[$profile->profile_id])){
 					$_SESSION['viewProfessionalProfileId'] = $profile->profile_id;
@@ -127,7 +127,7 @@ class ProfessionalController extends Controller
 			}
 	   	}
 		else if ($professionals!=null){
-			$this->view('home/searchProfessional', ['professionals'=> $professionals]);
+			$this->view('professionals/searchProfessional', ['professionals'=> $professionals]);
 			foreach ($professionals as $professional) {
 				if (isset($_POST[$professional->profile_id])){
 					$_SESSION['viewProfessionalProfileId'] = $professional->profile_id;
@@ -151,14 +151,14 @@ class ProfessionalController extends Controller
 
 		if (isset($_POST['request'])){
 			$request->insertRelationRequest();
-			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
+			$this->view('professionals/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
 		}
 		else if (isset($_POST['deleteRequest'])){
 			$request->delete();
-			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
+			$this->view('professionals/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
 		}
 		else
-			$this->view('home/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
+			$this->view('professionals/viewProfessionalProfile', ['currentProfile'=>$currentProfile, 'reviews' => $reviews]);
     }
 
 }

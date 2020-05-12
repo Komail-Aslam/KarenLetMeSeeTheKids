@@ -21,7 +21,7 @@ class CommentController extends Controller
 		if (isset($_POST['write_comment'])){
 			if ($_POST['comment'] == null || ctype_space($_POST['comment'])){
                 $_SESSION['error'] = "Error: The comment must contain text.";
-                $this->view('home/writeComment', $currentPost);
+                $this->view('comments/writeComment', $currentPost);
             }
             else {
 				$comment = $this->model('Comments');
@@ -33,14 +33,14 @@ class CommentController extends Controller
 			}
 		}
 		else
-			$this->view('home/writeComment', $currentPost);   	
+			$this->view('comments/writeComment', $currentPost);   	
     }
 
     public function writeReviewComment(){
     	if (isset($_POST['writeComment'])){
     		if ($_POST['reviewComment'] == null || ctype_space($_POST['reviewComment'])){
     			$_SESSION['error'] = "Error: The comment must contain text.";
-    			$this->view('home/writeReviewComment');
+    			$this->view('comments/writeReviewComment');
     		}
     		else {
 	    		$reviewComment = $this->model('ReviewComment');
@@ -51,6 +51,6 @@ class CommentController extends Controller
 	    		header('location:/Profile/modifyProfile');
 	    	}
     	}
-    	$this->view('home/writeReviewComment');
+    	$this->view('comments/writeReviewComment');
     }
 }

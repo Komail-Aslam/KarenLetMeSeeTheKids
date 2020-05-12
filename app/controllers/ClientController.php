@@ -16,12 +16,12 @@ class ClientController extends Controller{
 
     	$profile = $this->model('Profile');
     	$currentProfile = $profile->currentProfile($_SESSION['user_id']);
-    	$this->view('home/clientProfileCreate', $currentProfile);
+    	$this->view('clients/clientProfileCreate', $currentProfile);
 
     	if (isset($_POST['action'])){
     		if (!isset($_POST['professional_type'])){
     			$_SESSION["error"] = "Please select one of the options.";
-	    		$this->view('home/clientProfileCreate', $currentProfile);
+	    		$this->view('clients/clientProfileCreate', $currentProfile);
 	    	}
 	    	else {
 	    		$client = $this->model('Client');
@@ -32,7 +32,7 @@ class ClientController extends Controller{
 	    	}
     	}
     	else
-    		$this->view('home/clientProfileCreate', $currentProfile);
+    		$this->view('clients/clientProfileCreate', $currentProfile);
     }
 
     public function viewClients(){
@@ -52,7 +52,7 @@ class ClientController extends Controller{
     			header('location:/Client/searchClient');
     		else{
     			$_SESSION['error'] = "No profiles found.";
-    			$this->view('home/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);
+    			$this->view('clients/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);
     		}
 		}
 
@@ -97,7 +97,7 @@ class ClientController extends Controller{
 			}
 		}
 
-		$this->view('home/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);
+		$this->view('clients/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);
 	}
 
 	public function searchClient()
@@ -107,7 +107,7 @@ class ClientController extends Controller{
 		$profile = $this->model('Profile');
 	   	$profiles = $profile->search($search);
 	   	if ($profiles!=null){
-			$this->view('home/searchClient', ['profiles'=> $profiles]);
+			$this->view('clients/searchClient', ['profiles'=> $profiles]);
 			foreach ($profiles as $profile) {
 				if (isset($_POST[$profile->profile_id])){
 					$_SESSION['viewClientProfileId'] = $profile->profile_id;
@@ -119,7 +119,7 @@ class ClientController extends Controller{
 		$client = $this->model('Client');
 		$clients = $client->getClientProfessionalType($search);
 		if ($clients!=null){
-			$this->view('home/searchClient', ['clients'=> $clients]);
+			$this->view('clients/searchClient', ['clients'=> $clients]);
 			foreach ($clients as $client) {
 				if (isset($_POST[$client->profile_id])){
 					$_SESSION['viewClientProfileId'] = $client->profile_id;
@@ -132,7 +132,7 @@ class ClientController extends Controller{
 	public function viewClientProfile(){
 		$profile = $this->model('Profile');
 		$currentProfile = $profile->currentProfileProfileId($_SESSION['viewClientProfileId']);
-		$this->view('home/viewClientProfile', $currentProfile);
+		$this->view('clients/viewClientProfile', $currentProfile);
 	}
 
 }

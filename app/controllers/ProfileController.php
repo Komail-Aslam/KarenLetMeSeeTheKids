@@ -25,7 +25,7 @@ class ProfileController extends Controller{
 				if (empty($text)){
 					$checked = false;
 					$_SESSION['error'] = "Error: All fields must be filled.";
-					$this->view('home/modifyProfile', $currentProfile);
+					$this->view('profile/modifyProfile', $currentProfile);
 				}
 			}
 			if ($checked){
@@ -41,7 +41,7 @@ class ProfileController extends Controller{
 	       		if (isset($_SESSION['professional_id'])){
 	       			if ($_POST['education'] == null || ctype_space($_POST['education']) || $_POST['years'] == null || ctype_space($_POST['years'])){
 	       				$_SESSION['error'] = "Error: All fields must be filled.";
-						$this->view('home/modifyProfile', $currentProfile);
+						$this->view('profile/modifyProfile', $currentProfile);
 	       			}
 	       			else {
 		       			$professional = $this->model('Professional');
@@ -58,7 +58,7 @@ class ProfileController extends Controller{
 	       	}
 		}
 		else
-			$this->view('home/modifyProfile', $currentProfile);
+			$this->view('profile/modifyProfile', $currentProfile);
 		
 
 		if (isset($_SESSION['professional_id'])){
