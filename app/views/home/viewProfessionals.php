@@ -26,7 +26,7 @@
 			?>
 		</div>
 		<form action="" method="post">
-			<input type="text" name="search_professional">
+			<input type="text" name="search_professional" placeholder="Search name or profession..">
 			<input type="submit" name="search" value="Search for Professional">
 			<?php
 				if (isset($_SESSION['error'])){
@@ -35,7 +35,7 @@
 				}
 			?>
 			<table>
-		<th>Requests</th>
+		<caption class="tableHeader">Pending Requests</caption>
 		<?php
 			if ($data["requests"]!=null){
 				foreach ($data["requests"] as $request) {
@@ -43,7 +43,7 @@
 					$receiver = $professional->getProfessionalProfessionalId($request->receiver_id);
 					$profile = $this->model('Profile');
 					$receiverProfile = $profile->currentProfileProfileId($receiver->profile_id);
-					echo "<tr><td>$receiverProfile->first_name $receiverProfile->last_name</td>
+					echo "<tr><td style='width: 40%'>$receiverProfile->first_name $receiverProfile->last_name</td>
 							<td><input type='submit' name='4+$receiverProfile->profile_id' value='View Profile'>
 							<input type='submit' name='5+$request->receiver_id' value='Delete'>";
 				}
@@ -51,7 +51,7 @@
 		?>
 	</table>
 			<table>
-			<th>Professionals</th>
+			<caption class="tableHeader">My Professionals</caption>
 			<?php
 				if ($data["relations"]!=null){
 					$professional = $this->model('Professional');
@@ -63,7 +63,7 @@
 						// $sender = $client->getClientClientId($request->sender_id);
 						// $profile = $this->model('Profile');
 						// $senderProfile = $profile->currentProfileProfileId($sender->profile_id);
-						echo "<tr><td>$professionalProfile->first_name $professionalProfile->last_name</td>
+						echo "<tr><td style='width: 40%'>$professionalProfile->first_name $professionalProfile->last_name</td>
 								<td><input type='submit' name='4+$currProfessional->professional_id' value='View Profile'>
 								<input type='submit' name='$currProfessional->professional_id' value='End Interaction'>
 								<input type='submit' name='0+$currProfessional->professional_id' value='Message'>

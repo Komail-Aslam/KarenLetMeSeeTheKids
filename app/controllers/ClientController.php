@@ -2,6 +2,14 @@
 
 class ClientController extends Controller{
 
+	public function index()
+    {
+        if (isset($_SESSION['user_id']))
+            header('location:/Client/viewClients');
+        else 
+            header('location:/Home/login');
+    }
+
 	public function clientProfileCreate(){
     	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
     		return header('location:/Home/Login');

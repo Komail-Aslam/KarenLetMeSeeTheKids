@@ -2,6 +2,14 @@
 
 class ReviewController extends Controller{
 
+    public function index()
+    {
+        if (isset($_SESSION['user_id']))
+            header('location:/Review/writeReview');
+        else 
+            header('location:/Home/login');
+    }
+
 	 public function writeReview(){
     	$professional = $this->model('Professional');
     	$pro = $professional->getProfessional($_SESSION['professionalReview']);

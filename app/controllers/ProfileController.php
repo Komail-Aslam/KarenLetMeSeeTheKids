@@ -2,6 +2,14 @@
 
 class ProfileController extends Controller{
 
+	public function index()
+    {
+        if (isset($_SESSION['user_id']))
+            header('location:/Profile/modifyProfile');
+        else 
+            header('location:/Home/login');
+    }
+
 	public function modifyProfile(){
     	if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
     		return header('location:/Home/Login');

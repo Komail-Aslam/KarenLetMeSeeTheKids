@@ -2,6 +2,14 @@
 
 class AppointmentController extends Controller{
 
+	public function index()
+    {
+        if (isset($_SESSION['user_id']))
+            header('location:/Appointment/viewAppointments');
+        else 
+            header('location:/Home/login');
+    }
+
 	public function viewAppointments(){
 		$appointment = $this->model('Appointment');
 		$request = $this->model('Request');

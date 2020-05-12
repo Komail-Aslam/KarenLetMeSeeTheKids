@@ -37,8 +37,8 @@
 		?>
 
 		<table class="home">
-			<th>Posted By:</th>
-			<th>Question:</th>
+			<th><u>Posted By:</th>
+			<th><u>Question:</th>
 		<?php
 			if ($data!=null){
 				foreach($data["posts"] as $posts){

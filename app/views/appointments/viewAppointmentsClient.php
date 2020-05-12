@@ -19,7 +19,7 @@
 			<?php
 				if (isset($_SESSION['client_id'])){
 					echo "<a href='/Professional/viewProfessionals'>Professionals</a>
-						<a href='/Home/ModifyProfile'>Logbook</a>";
+						<a href='/Logbook/viewLogbook'>Logbook</a>";
 				}
 				else
 					echo "<a href='/Client/viewClients'>Clients</a>";
@@ -27,7 +27,7 @@
 		</div>
 		<form action="" method="post">
 		<table>
-			<caption>Pending Requests</caption>
+			<caption class="tableHeader">Pending Requests</caption>
 		<?php
 			if ($data["requests"]!=null){
 				foreach ($data["requests"] as $request) {
@@ -35,7 +35,7 @@
 					$receiver = $pro->getProfessionalProfessionalId($request->receiver_id);
 					$profile = $this->model('Profile');
 					$senderProfile=$profile->currentProfileProfileId($receiver->profile_id);
-					echo "<tr><td>$senderProfile->first_name $senderProfile->last_name</td>
+					echo "<tr><td style='width: 70%'>$senderProfile->first_name $senderProfile->last_name</td>
 							<td><input type='submit' name='0+$receiver->profile_id' value='View Profile'>
 							<input type='submit' name='2+$request->sender_id' value='Delete'></td></tr>";
 				}
@@ -43,7 +43,7 @@
 		?>
 		</table>
 		<table>
-			<th>Appointments</th>
+			<caption class="tableHeader">Appointments</caption>
 			<?php
 			if ($data["appointments"]!=null){
 				foreach ($data["appointments"] as $app) {
@@ -51,7 +51,7 @@
 					$pro = $p->getProfessionalProfessionalId($app->professional_id);
 					$profile = $this->model('Profile');
 					$proProfile=$profile->currentProfileProfileId($pro->profile_id);
-					echo "<tr><td>$proProfile->first_name $proProfile->last_name | $app->appLocation | $app->appDate | $app->appTime</td>
+					echo "<tr><td style='width: 70%'>$proProfile->first_name $proProfile->last_name | $app->appLocation | $app->appDate | $app->appTime</td>
 							<td><input type='submit' name='$pro->profile_id' value='View Profile'>
 							<input type='submit' name='$app->appointment_id' value='Cancel'></td></tr>";
 				}

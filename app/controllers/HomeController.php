@@ -2,11 +2,14 @@
 
 class HomeController extends Controller
 {
-    public function index($name = '')
+    public function index()
     {
-       $profile = $this->model('Profile');
-       $profiles = $profile->All();
-       $this->view('home/index', ['profiles' => $profiles]);
+        if (isset($_SESSION['user_id'])){
+            header('location:/Home/homepage');
+        }
+        else {
+            header('location:/Home/login');
+        }
     }
 
     public function login()

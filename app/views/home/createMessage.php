@@ -27,7 +27,7 @@
 		</div>
 		<h2>Who would you like to message?</h2>
 			<form action="" method="post">
-				Send to: <input type='text' name='receiver' />
+				Send to: <input type='text' name='receiver' placeholder="Enter name.." />
 				<input type="submit" name="search" value="Search">
 			</form>
 			<form action="" method="post">

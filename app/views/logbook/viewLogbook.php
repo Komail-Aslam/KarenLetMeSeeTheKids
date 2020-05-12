@@ -14,7 +14,7 @@
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Profile/ModifyProfile">Profile</a>
-			<a href="/Home/ViewMessages">Messages</a>
+			<a href="/Message/ViewMessages">Messages</a>
 			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
@@ -32,12 +32,11 @@
 				}
 			?>
 			<table>
-				<caption><b><u>Logbook</u></b></caption>
 				<th>Title</th>
 				<th>Entry</th>
 			<?php
 				foreach($data["logbook"] as $log){
-				echo "<tr><td>$log->log_title</td><td>$log->log_content</td></tr>";
+				echo "<tr><td style='width: 30%'>$log->log_title</td><td>$log->log_content</td></tr>";
 			}
 			?>
 			</table>

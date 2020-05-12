@@ -2,6 +2,14 @@
 
 class ProfessionalController extends Controller
 {
+	public function index()
+    {
+        if (isset($_SESSION['user_id']))
+            header('location:/Professional/viewProfessionals');
+        else 
+            header('location:/Home/login');
+    }
+
 	public function professionalProfileCreate(){
 		if(!isset($_SESSION['user_id']) || $_SESSION['user_id']==null)
     		return header('location:/Home/Login');

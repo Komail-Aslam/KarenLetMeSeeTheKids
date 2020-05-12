@@ -34,7 +34,7 @@
 			<ul>Country: <input type="text" name="country" value="<?php echo$data->country?>"></ul>
 			<?php
 				if(isset($_SESSION["client_id"])){
-					echo "<input type='submit' name='action' value='Save' style='margin-left: 75%'>";
+					echo "<input type='submit' name='action' value='Save' style='margin-left: 65%'>";
 					if (isset($_SESSION['error'])){
 						$error = $_SESSION['error'];
 						echo "<p>$error</p>";

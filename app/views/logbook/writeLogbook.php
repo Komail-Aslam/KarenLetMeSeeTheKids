@@ -14,7 +14,7 @@
 		<div class="topnav">
 			<a href="/Home/Homepage">Home</a>
 			<a href="/Profile/ModifyProfile">Profile</a>
-			<a href="/Home/ViewMessages">Messages</a>
+			<a href="/Message/ViewMessages">Messages</a>
 			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
@@ -29,7 +29,16 @@
 			<ul>Log Title: <input type="text" name="log_title"></ul>
 			<ul>Log Entry: <input type="text" name="log_content"></ul>
 			<input style="margin-left: 65%" type="submit" name="writeLog" value="Write Log">
+			<?php
+			if (isset($_SESSION['error'])){
+				$error = $_SESSION['error'];
+				echo "<p style='margin-left: 55%'>$error</p>";
+			}
+			?>
 		</form>
 	</div>
 	</body>
 </html>
+<?php
+	unset($_SESSION['error']);
+?>
