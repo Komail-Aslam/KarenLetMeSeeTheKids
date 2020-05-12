@@ -25,10 +25,10 @@
 					echo "<a href='/Client/viewClients'>Clients</a>";
 			?>
 		</div>
-		<form action="" method="post">
-			Log Title: <input type="text" name="log_title">
-			Log Entry: <input type="text" name="log_content">
-			<input type="submit" name="writeLog" value="Write Log">
+		<form class="logbookCreate" action="" method="post">
+			<ul>Log Title: <input type="text" name="log_title"></ul>
+			<ul>Log Entry: <input type="text" name="log_content"></ul>
+			<input style="margin-left: 65%" type="submit" name="writeLog" value="Write Log">
 		</form>
 	</div>
 	</body>

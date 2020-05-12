@@ -35,6 +35,22 @@
 				}
 			?>
 			<table>
+		<th>Requests</th>
+		<?php
+			if ($data["requests"]!=null){
+				foreach ($data["requests"] as $request) {
+					$professional = $this->model('Professional');
+					$receiver = $professional->getProfessionalProfessionalId($request->receiver_id);
+					$profile = $this->model('Profile');
+					$receiverProfile = $profile->currentProfileProfileId($receiver->profile_id);
+					echo "<tr><td>$receiverProfile->first_name $receiverProfile->last_name</td>
+							<td><input type='submit' name='4+$receiverProfile->profile_id' value='View Profile'>
+							<input type='submit' name='5+$request->receiver_id' value='Delete'>";
+				}
+			}
+		?>
+	</table>
+			<table>
 			<th>Professionals</th>
 			<?php
 				if ($data["relations"]!=null){

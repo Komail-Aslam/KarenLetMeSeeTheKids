@@ -31,6 +31,8 @@ class ProfessionalController extends Controller
 	public function viewProfessionals(){
     	$relation = $this->model('Relation');
 		$allRelations = $relation->getRelationsClientId($_SESSION['client_id']);
+		$request = $this->model('Request');
+		$allRequests = $request->getRequestsClient($_SESSION['client_id']);
 
     	if (isset($_POST['search'])){
 	   		$_SESSION['professional_search'] = $_POST['search_professional'];
@@ -45,6 +47,20 @@ class ProfessionalController extends Controller
     			$_SESSION['error'] = "No profiles found.";
     			$this->view('home/viewProfessionals', ['relations' => $allRelations]);
     		}
+		}
+
+		foreach ($allRequests as $request) {
+			$professional = $this->model('Professional');
+			$receiver = $professional->getProfessionalProfessionalId($request->receiver_id);
+			
+			if (isset($_POST["4+$receiver->profile_id"])){
+				$_SESSION['viewProfessionalProfileId'] = $receiver->profile_id;
+				return header('location:/Professional/viewProfessionalProfile');
+			}
+			else if (isset($_POST["5+$request->receiver_id"])){
+				$request->delete();
+				return header('location:/Professional/viewProfessionals');
+			}
 		}
 
 		foreach ($allRelations as $relation) {
@@ -84,7 +100,7 @@ class ProfessionalController extends Controller
 			}
 		}
 
-    	$this->view('home/viewProfessionals', ['relations' => $allRelations]);
+    	$this->view('home/viewProfessionals', ['relations' => $allRelations, 'requests'=>$allRequests]);
     }
 
     public function searchProfessional(){

@@ -67,7 +67,8 @@
 					// $senderProfile = $profile->currentProfileProfileId($sender->profile_id);
 					echo "<tr><td>$clientProfile->first_name $clientProfile->last_name</td>
 							<td><input type='submit' name='$currClient->client_id' value='End Interaction'>
-							<input type='submit' name='0+$currClient->client_id' value='Message'></td></tr>";
+							<input type='submit' name='0+$currClient->client_id' value='Message'>
+							<input type='submit' name='1+$currClient->client_id' value='Logbook'></td></tr>";
 				}
 			}
 		?>

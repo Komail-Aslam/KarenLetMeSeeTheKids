@@ -44,6 +44,14 @@
 	        return $stmt->fetchAll();
         }
 
+        function getRequestsClient($sender_id){
+            $sql = 'SELECT * FROM Requests WHERE sender_id = :sender_id AND type = :type';
+            $stmt = self::$_connection->prepare($sql);
+            $stmt->execute(['sender_id'=>$sender_id, 'type'=>"relation"]);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Request');
+            return $stmt->fetchAll();
+        }
+
         function getAppRequestsProfessional($receiver_id){
         	$sql = 'SELECT * FROM Requests WHERE receiver_id = :receiver_id AND type = :type';
 	        $stmt = self::$_connection->prepare($sql);

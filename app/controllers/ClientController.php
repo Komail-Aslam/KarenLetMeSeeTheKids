@@ -83,6 +83,10 @@ class ClientController extends Controller{
 				$_SESSION['receiver'] = $currProfile->user_id;
 				return header('location:/Message/writeMessage');
 			}
+			else if(isset($_POST["1+$currClient->client_id"])){
+				$_SESSION['viewClientLogbook'] = $currClient->client_id;
+				return header('location:/Logbook/viewLogbook');
+			}
 		}
 
 		$this->view('home/viewClients', ['requests' => $allRequests, 'relations' => $allRelations]);

@@ -55,6 +55,12 @@ input[type=submit].b1 {
 	margin-top: 20px;
 	padding: 8px;
 }
+
+form.logbookCreate {
+	padding-top: 40px;
+	margin-right: 30%;
+	
+}
 	
 a {
 	float: right;
