@@ -28,7 +28,7 @@
 		<h2>Who would you like to message?</h2>
 			<form action="" method="post">
 				Send to: <input type='text' name='receiver' placeholder="Enter name.." />
-				<input type="submit" name="search" value="Search">
+				<input class="button" type="submit" name="search" value="Search">
 			</form>
 			<form action="" method="post">
 				<?php
@@ -44,7 +44,7 @@
 					
 				?>
 				<br /><br />
-				<input type="submit" name="proceed" value="Write Message">
+				<input class="button" type="submit" name="proceed" value="Write Message">
 		</form>
 
 		<?php
