@@ -33,7 +33,7 @@
 		<form action="" method="post">
 			Message: <br>
 			<textarea type="text" name="message" rows="10" cols="50" style="resize: none;" placeholder="Enter your message here"></textarea><br><br>
-			<input class="button" type="submit" name="send_message" value="Send Message">
+			<input class="b1" type="submit" name="send_message" value="Send Message">
 			<?php
 			if (isset($_SESSION['error'])){
 				$error = $_SESSION['error'];

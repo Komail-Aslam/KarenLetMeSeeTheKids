@@ -28,7 +28,7 @@
 
 		<form action="" method="post">
 			<input type="text" name="search_client">
-			<input type="submit" name="search" value="Search for Client">
+			<input class='smallButton' type="submit" name="search" value="Search for Client">
 			<?php
 				if (isset($_SESSION['error'])){
 					$error = $_SESSION['error'];
@@ -45,9 +45,9 @@
 					$profile = $this->model('Profile');
 					$senderProfile = $profile->currentProfileProfileId($sender->profile_id);
 					echo "<tr><td>$senderProfile->first_name $senderProfile->last_name</td>
-							<td><input type='submit' name='0+$senderProfile->profile_id' value='View Profile'>
-							<input type='submit' name='1+$request->sender_id' value='Accept'>
-							<input type='submit' name='2+$request->sender_id' value='Decline'</td></tr>";
+							<td><input class='smallButton' type='submit' name='0+$senderProfile->profile_id' value='View Profile'>
+							<input class='smallButton' type='submit' name='1+$request->sender_id' value='Accept'>
+							<input class='smallButton' type='submit' name='2+$request->sender_id' value='Decline'</td></tr>";
 				}
 			}
 		?>
@@ -66,9 +66,9 @@
 					// $profile = $this->model('Profile');
 					// $senderProfile = $profile->currentProfileProfileId($sender->profile_id);
 					echo "<tr><td>$clientProfile->first_name $clientProfile->last_name</td>
-							<td><input type='submit' name='$currClient->client_id' value='End Interaction'>
-							<input type='submit' name='0+$currClient->client_id' value='Message'>
-							<input type='submit' name='1+$currClient->client_id' value='Logbook'></td></tr>";
+							<td><input class='smallButton' type='submit' name='$currClient->client_id' value='End Interaction'>
+							<input class='smallButton' type='submit' name='0+$currClient->client_id' value='Message'>
+							<input class='smallButton' type='submit' name='1+$currClient->client_id' value='Logbook'></td></tr>";
 				}
 			}
 		?>

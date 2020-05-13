@@ -98,18 +98,6 @@ ul {
 	width: 80%;
 }
 
-.button {
-  background-color: pink;
-  border: 2px;
-  border-color: black;
-  border-style: solid;
-  color: black;
-  padding: 10px 16px;
-  text-align: center;
-  display: inline-block;
-  font-size: 12px;
-}
-
 .smallButton {
   background-color: pink;
   border: 1px;
