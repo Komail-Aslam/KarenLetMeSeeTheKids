@@ -36,9 +36,9 @@
 					$profile = $this->model('Profile');
 					$senderProfile=$profile->currentProfileProfileId($sender->profile_id);
 					echo "<tr><td>$senderProfile->first_name $senderProfile->last_name</td>
-							<td><input type='submit' name='0+$sender->profile_id' value='View Profile'>
-							<input type='submit' name='1+$request->sender_id' value='Accept'>
-							<input type='submit' name='2+$request->sender_id' value='Decline'></td></tr>";
+							<td><input class='smallButton' type='submit' name='0+$sender->profile_id' value='View Profile'>
+							<input class='smallButton' type='submit' name='1+$request->sender_id' value='Accept'>
+							<input class='smallButton' type='submit' name='2+$request->sender_id' value='Decline'></td></tr>";
 				}
 			}
 		?>
@@ -53,9 +53,9 @@
 					$profile = $this->model('Profile');
 					$clientProfile=$profile->currentProfileProfileId($client->profile_id);
 					echo "<tr><td>$clientProfile->first_name $clientProfile->last_name | $app->appLocation | $app->appDate | $app->appTime</td>
-							<td><input type='submit' name='3+$client->profile_id' value='View Profile'>
-							<input type='submit' name='$app->appointment_id' value='Modify'>
-							<input type='submit' name='1+$app->appointment_id' value='Cancel'></td></tr>";
+							<td><input class='smallButton' type='submit' name='3+$client->profile_id' value='View Profile'>
+							<input class='smallButton' type='submit' name='$app->appointment_id' value='Modify'>
+							<input class='smallButton' type='submit' name='1+$app->appointment_id' value='Cancel'></td></tr>";
 				}
 			}
 			?>

@@ -26,8 +26,8 @@
 			?>
 		</div>
 		<form action="" method="post">
-			<input type="text" name="search_professional" placeholder="Search name or profession..">
-			<input type="submit" name="search" value="Search for Professional">
+			<input style="margin-left: 8px" type="text" name="search_professional" placeholder="Search name or profession..">
+			<input class="smallButton" type="submit" name="search" value="Search for Professional">
 			<?php
 				if (isset($_SESSION['error'])){
 					$error = $_SESSION['error'];
@@ -35,7 +35,7 @@
 				}
 			?>
 			<table>
-		<caption class="tableHeader">Pending Requests</caption>
+		<caption class="tableHeader" style="padding-top: 10px">Pending Requests</caption>
 		<?php
 			if ($data["requests"]!=null){
 				foreach ($data["requests"] as $request) {
@@ -44,8 +44,8 @@
 					$profile = $this->model('Profile');
 					$receiverProfile = $profile->currentProfileProfileId($receiver->profile_id);
 					echo "<tr><td style='width: 40%'>$receiverProfile->first_name $receiverProfile->last_name</td>
-							<td><input type='submit' name='4+$receiverProfile->profile_id' value='View Profile'>
-							<input type='submit' name='5+$request->receiver_id' value='Delete'>";
+							<td><input class='smallButton' type='submit' name='4+$receiverProfile->profile_id' value='View Profile'>
+							<input type='submit' class='smallButton' name='5+$request->receiver_id' value='Delete'>";
 				}
 			}
 		?>
@@ -64,16 +64,16 @@
 						// $profile = $this->model('Profile');
 						// $senderProfile = $profile->currentProfileProfileId($sender->profile_id);
 						echo "<tr><td style='width: 40%'>$professionalProfile->first_name $professionalProfile->last_name</td>
-								<td><input type='submit' name='4+$currProfessional->professional_id' value='View Profile'>
-								<input type='submit' name='$currProfessional->professional_id' value='End Interaction'>
-								<input type='submit' name='0+$currProfessional->professional_id' value='Message'>
-								<input type='submit' name='1+$currProfessional->professional_id' value='Write Review'>";
+								<td><input class='smallButton' type='submit' name='4+$currProfessional->professional_id' value='View Profile'>
+								<input class='smallButton' type='submit' name='$currProfessional->professional_id' value='End Interaction'>
+								<input class='smallButton' type='submit' name='0+$currProfessional->professional_id' value='Message'>
+								<input class='smallButton' type='submit' name='1+$currProfessional->professional_id' value='Write Review'>";
 						$request = $this->model('Request');
 						$checkRequest = $request->getRequest($_SESSION['client_id'], $relation->professional_id, "appointment");
 						if ($checkRequest==null)
-							echo "<input type='submit' name='2+$currProfessional->professional_id' value='Request Appointment'></td></tr>";
+							echo "<input class='smallButton' type='submit' name='2+$currProfessional->professional_id' value='Request Appointment'></td></tr>";
 						else
-							echo "<input type='submit' name='3+$currProfessional->professional_id' value='Unrequest Appointment'></td></tr>";
+							echo "<input class='smallButton' type='submit' name='3+$currProfessional->professional_id' value='Unrequest Appointment'></td></tr>";
 					}
 				}
 			?>

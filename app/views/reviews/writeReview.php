@@ -18,7 +18,7 @@
 			<a href="/Appointment/viewAppointments">Appointments</a>
 			<?php
 				if (isset($_SESSION['client_id'])){
-					echo "<a href='/Professional/viewProfessionals'>Professionals</a>
+					echo "<a class='active' href='/Professional/viewProfessionals'>Professionals</a>
 						<a href='/Logbook/viewLogbook'>Logbook</a>";
 				}
 				else
@@ -29,10 +29,10 @@
 		<?php
 			$profile = $this->model('Profile');
 			$pro = $profile->currentProfileProfileId($data);
-			echo "Review for: $pro->first_name $pro->last_name<br>";
+			echo "<h2>Review for: $pro->first_name $pro->last_name</h2>";
 		?>
-		Enter the review below:<br><input type="text" name="reviewContent">
-		<input type="submit" name="writeReview" value="Write Review">
+		Enter the review below:<br><textarea type="text" cols="50" rows="10" name="reviewContent" style="resize: none;" placeholder="Enter review content here..."></textarea><br><br>
+		<input class="button" type="submit" name="writeReview" value="Write Review">
 		<?php
 			if (isset($_SESSION['error'])){
 				$error = $_SESSION['error'];

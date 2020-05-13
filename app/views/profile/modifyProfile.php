@@ -34,7 +34,7 @@
 			<ul>Country: <input type="text" name="country" value="<?php echo$data->country?>"></ul>
 			<?php
 				if(isset($_SESSION["client_id"])){
-					echo "<input type='submit' name='action' value='Save' style='margin-left: 65%'>";
+					echo "<input class='smallButton' type='submit' name='action' value='Save' style='margin-left: 65%'>";
 					if (isset($_SESSION['error'])){
 						$error = $_SESSION['error'];
 						echo "<p>$error</p>";
@@ -51,7 +51,7 @@
 							Child Therapist: <input type='radio' name='professional_type' value='Child Therapist'"; if ($profession=="Child Therapist"){echo "checked";} echo"></ul>
 							<ul><b>Education: <input type='text' name='education' value='$pro->education'><br></ul>
 							<ul>Years of Experience: <input type='text' name='years' value='$pro->years'><br></ul>
-							<input type='submit' name='action' value='Save'>";
+							<input class='smallButton' type='submit' name='action' value='Save'>";
 
 						if (isset($_SESSION['error'])){
 							$error = $_SESSION['error'];

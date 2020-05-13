@@ -59,7 +59,7 @@
 								if ($comment->verified == 1){
 									echo"<b>✓</b>";
 									if (isset($_SESSION['professional_id'])){
-										echo"<input type='submit' name='0+$comment->comment_id' value='Unverify'><br></t>";
+										echo"<input class='smallButton' style='margin-left: 5px' type='submit' name='0+$comment->comment_id' value='Unverify'><br></t>";
 									}
 									else
 										echo "<br>";
@@ -67,7 +67,7 @@
 
 								if ($comment->verified == 0){
 									if (isset($_SESSION['professional_id'])){
-										echo"<input type='submit' name='1+$comment->comment_id' value='Verify'><br></t>";	
+										echo"<input class='smallButton' type='submit' name='1+$comment->comment_id' value='Verify' style='margin-left: 5px'><br></t>";	
 									}
 									else
 										echo "<br>";
@@ -75,7 +75,7 @@
 							}
 						}
 						echo "</td>
-						<td class='home'><input type='submit' name='$posts->post_id' value='Comment'></td></form></tr>";
+						<td class='home'><input class='smallButton' type='submit' name='$posts->post_id' value='Comment'></td></form></tr>";
 
 				}
 			}

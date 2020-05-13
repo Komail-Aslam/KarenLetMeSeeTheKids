@@ -38,7 +38,7 @@
 						if ($currProfessional != null){
 							echo "<tr><td>$profile->first_name $profile->last_name</td>
 										<td>$currProfessional->profession</td>
-										<td><input type='submit' name='$profile->profile_id' value='View Profile'></td></tr>";
+										<td><input class='smallButton' type='submit' name='$profile->profile_id' value='View Profile'></td></tr>";
 						}
 					}
 				}

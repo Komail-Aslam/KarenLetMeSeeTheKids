@@ -36,8 +36,8 @@
 					$profile = $this->model('Profile');
 					$senderProfile=$profile->currentProfileProfileId($receiver->profile_id);
 					echo "<tr><td style='width: 70%'>$senderProfile->first_name $senderProfile->last_name</td>
-							<td><input type='submit' name='0+$receiver->profile_id' value='View Profile'>
-							<input type='submit' name='2+$request->sender_id' value='Delete'></td></tr>";
+							<td><input class='smallButton' class='smallButton' type='submit' name='0+$receiver->profile_id' value='View Profile'>
+							<input class='smallButton' type='submit' name='2+$request->sender_id' value='Delete'></td></tr>";
 				}
 			}
 		?>
@@ -52,8 +52,8 @@
 					$profile = $this->model('Profile');
 					$proProfile=$profile->currentProfileProfileId($pro->profile_id);
 					echo "<tr><td style='width: 70%'>$proProfile->first_name $proProfile->last_name | $app->appLocation | $app->appDate | $app->appTime</td>
-							<td><input type='submit' name='$pro->profile_id' value='View Profile'>
-							<input type='submit' name='$app->appointment_id' value='Cancel'></td></tr>";
+							<td><input class='smallButton' type='submit' name='$pro->profile_id' value='View Profile'>
+							<input class='smallButton' type='submit' name='$app->appointment_id' value='Cancel'></td></tr>";
 				}
 			}
 			?>

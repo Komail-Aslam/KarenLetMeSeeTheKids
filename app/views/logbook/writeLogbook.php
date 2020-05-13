@@ -26,9 +26,10 @@
 			?>
 		</div>
 		<form class="logbookCreate" action="" method="post">
-			<ul>Log Title: <input type="text" name="log_title"></ul>
-			<ul>Log Entry: <input type="text" name="log_content"></ul>
-			<input style="margin-left: 65%" type="submit" name="writeLog" value="Write Log">
+			<h2>Create Log</h2>
+			Log Title: <input style="margin-left: 5px; width: 298px" type="text" name="log_title"><br><br>
+			Log Entry:<br> <textarea type="text" name="log_content"  rows="10" cols="50" style="resize: none;"></textarea><br><br>
+			<input class="button" type="submit" name="writeLog" value="Write Log">
 			<?php
 			if (isset($_SESSION['error'])){
 				$error = $_SESSION['error'];

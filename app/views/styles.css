@@ -62,12 +62,6 @@ input[type=submit].b1 {
 	margin-top: 20px;
 	padding: 8px;
 }
-
-form.logbookCreate {
-	padding-top: 40px;
-	margin-right: 30%;
-	
-}
 	
 a {
 	float: right;
@@ -112,9 +106,21 @@ ul {
   color: black;
   padding: 10px 16px;
   text-align: center;
-  text-decoration: none;
   display: inline-block;
   font-size: 12px;
+}
+
+.smallButton {
+  background-color: pink;
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  color: black;
+  padding: 3px 8px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  margin-right: 1px;
 }
 
 t {
