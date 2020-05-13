@@ -31,8 +31,9 @@
 		?>
 
 		<form action="" method="post">
-			Message: <input type="text" name="message"><br><br>
-			<input type="submit" name="send_message" value="Send Message">
+			Message: <br>
+			<textarea type="text" name="message" rows="10" cols="50" style="resize: none;"></textarea><br><br>
+			<input class="button" type="submit" name="send_message" value="Send Message">
 			<?php
 			if (isset($_SESSION['error'])){
 				$error = $_SESSION['error'];
