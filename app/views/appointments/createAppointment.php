@@ -25,12 +25,12 @@
 					echo "<a href='/Client/viewClients'>Clients</a>";
 			?>
 		</div>
-		<form action="" method="post">
-			<ul>Appointment With: <?php echo "$data->first_name $data->last_name";?></ul>
-			<ul>Location: <input type="text" name="appLocation"></ul>
-			<ul>Date: <input type="date" name="appDate"></ul>
-			<ul>Time: <input type="time" name="appTime" step="60" value="22:00"></ul>
-			<ul><input type="submit" name="createAppointment" value="Create Appointment"></ul>
+		<form action="" method="post" style="float: left;">
+			<h2>Appointment With: <?php echo "$data->first_name $data->last_name";?><br><br></h2>
+			Location: <input type="text" name="appLocation"><br><br>
+			Date: <input type="date" name="appDate"><br><br>
+			Time: <input type="time" name="appTime" step="60" value="22:00"><br><br>
+			<input class="b1" type="submit" name="createAppointment" value="Create Appointment">
 		</form>
 	</div>
 	</body>

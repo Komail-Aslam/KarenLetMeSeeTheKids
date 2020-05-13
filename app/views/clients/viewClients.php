@@ -35,8 +35,8 @@
 					echo "$error";
 				}
 			?>
-		<table>
-		<th>Requests</th>
+		<table style="margin-top: 15px">
+		<caption class="tableHeader">Requests</caption>
 		<?php
 			if ($data["requests"]!=null){
 				foreach ($data["requests"] as $request) {
@@ -53,7 +53,7 @@
 		?>
 	</table>
 	<table>
-		<th>Clients</th>
+		<caption class="tableHeader">Clients</caption>
 		<?php
 			if (isset($data["relations"])){
 				$client = $this->model('Client');

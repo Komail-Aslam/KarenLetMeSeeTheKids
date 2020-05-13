@@ -29,10 +29,10 @@
 		<?php
 			$review = $this->model('Review');
 			$currReview = $review->getReviewReviewId($_SESSION['reviewCommentId']);
-			echo "Review: $currReview->review_content<br>";
+			echo "<h2>Review: $currReview->review_content</h2><br>";
 		?>
-		Enter the comment below:<br><input type="text" name="reviewComment">
-		<input type="submit" name="writeComment" value="Write Comment">
+		Enter the comment below:<br><input type="text" name="reviewComment"><br>
+		<input class="b1" type="submit" name="writeComment" value="Write Comment">
 		<?php
 			if (isset($_SESSION['error'])){
 				$error = $_SESSION['error'];

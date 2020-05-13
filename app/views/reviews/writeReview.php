@@ -32,7 +32,7 @@
 			echo "<h2>Review for: $pro->first_name $pro->last_name</h2>";
 		?>
 		Enter the review below:<br><textarea type="text" cols="50" rows="10" name="reviewContent" style="resize: none;" placeholder="Enter review content here..."></textarea><br><br>
-		<input class="button" type="submit" name="writeReview" value="Write Review">
+		<input class="b1" type="submit" name="writeReview" value="Write Review">
 		<?php
 			if (isset($_SESSION['error'])){
 				$error = $_SESSION['error'];

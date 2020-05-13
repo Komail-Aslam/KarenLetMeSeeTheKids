@@ -51,7 +51,7 @@
 							Child Therapist: <input type='radio' name='professional_type' value='Child Therapist'"; if ($profession=="Child Therapist"){echo "checked";} echo"></ul>
 							<ul><b>Education: <input type='text' name='education' value='$pro->education'><br></ul>
 							<ul>Years of Experience: <input type='text' name='years' value='$pro->years'><br></ul>
-							<input class='smallButton' type='submit' name='action' value='Save'>";
+							<input class='smallButton' type='submit' name='action' value='Save' style='margin-left: 65%'>";
 
 						if (isset($_SESSION['error'])){
 							$error = $_SESSION['error'];
@@ -59,11 +59,13 @@
 						}
 			
 					?>
+					</form>
+					<form action="" method="post" style="margin-right: 0">
 					<?php
 					$review = $this->model('Review');
 					$reviews = $review->getReviews($pro->professional_id);
 					if ($reviews!=null){
-						echo "<table><th>Reviews</th>";
+						echo "<table style='width: 135%'><caption class='tableHeader'>Reviews</caption>";
 						foreach ($reviews as $review) {
 							$client = $this->model('client');
 							$currClient = $client->getClientClientId($review->client_id);
@@ -78,13 +80,14 @@
 									echo "<br>$proProfile->first_name $proProfile->last_name: $comment->comment";	
 								}
 							}
-							echo "</td><td><input type='submit' name='$review->review_id' value='Comment'></td></tr>";
+							echo "</td><td><input style='margin-right: 10px; margin-top: 2px; margin-bottom: 2px' class='smallButton' type='submit' name='$review->review_id' value='Comment'></td></tr>";
 						}
 						echo "</table>";
 					}
 				}
 			?>	
-		</form>
+			</form>
+		
 		
 	</div>
 	</body>

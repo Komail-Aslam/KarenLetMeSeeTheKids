@@ -32,12 +32,12 @@
 			$profile = $this->model('Profile');
 			$poster = $profile->currentProfileProfileId($poster->profile_id);
 
-			echo "<b>Poster:</b> $poster->first_name $poster->last_name<br><b>Post:</b> $data->post_content";
+			echo "<h2>Poster: $poster->first_name $poster->last_name</h2><h2>Post: $data->post_content</h2>";
 		?>
 
 		<form action="" method="post">
 			Comment: <input type="text" name="comment"><br><br>
-			<input type="submit" name="write_comment" value="Post Comment">
+			<input class="b1" type="submit" name="write_comment" value="Post Comment">
 			<?php
 				if (isset($_SESSION['error'])){
 					$error = $_SESSION['error'];

@@ -31,11 +31,11 @@
 				$thisClient = $client->getClientClientId($data->client_id);
 				$profile = $this->model('Profile');
 				$clientProfile=$profile->currentProfileProfileId($thisClient->profile_id);
-			echo "<ul>Appointment With: $clientProfile->first_name $clientProfile->last_name</ul>
-			<ul>Location: <input type='text' name='appLocation' value='$data->appLocation'></ul>
-			<ul>Date: <input type='date' name='appDate' value='$data->appDate'></ul>
-			<ul>Time: <input type='time' name='appTime' step='60' value='$data->appTime'></ul>
-			<ul><input type='submit' name='modifyAppointment' value='Modify Appointment'></ul>";
+			echo "<h2>Appointment With: $clientProfile->first_name $clientProfile->last_name<br><br></h2>
+			Location: <input type='text' name='appLocation' value='$data->appLocation'><br><br>
+			Date: <input type='date' name='appDate' value='$data->appDate'><br><br>
+			Time: <input type='time' name='appTime' step='60' value='$data->appTime'><br><br>
+			<input class='b1' type='submit' name='modifyAppointment' value='Modify Appointment'>";
 			?>
 		</form>
 	</div>

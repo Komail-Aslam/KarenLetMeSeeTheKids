@@ -57,9 +57,6 @@ class ProfileController extends Controller{
 	       			header('location:/Home/homepage');
 	       	}
 		}
-		else
-			$this->view('profile/modifyProfile', $currentProfile);
-		
 
 		if (isset($_SESSION['professional_id'])){
 			$review = $this->model('Review');
@@ -68,9 +65,10 @@ class ProfileController extends Controller{
 			foreach ($reviews as $review) {
 				if (isset($_POST[$review->review_id])){
 					$_SESSION['reviewCommentId'] = $review->review_id;
-					header('location:/Comment/writeReviewComment');
+					return header('location:/Comment/writeReviewComment');
 				}
 			}
 		}
+		$this->view('profile/modifyProfile', $currentProfile);
     }
 }
