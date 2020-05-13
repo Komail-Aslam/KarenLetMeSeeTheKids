@@ -27,7 +27,7 @@
 		</div>
 
 		<form action="" method="post" style="padding-top: 25px">
-			Enter the question below:<br> <input type="text" name="post_content"><br><br>
+			<h2>Enter the question below:</h2><br> <input type="text" name="post_content"><br><br>
 			<input type="submit" name="post" value="Post">
 			<?php
 				if (isset($_SESSION['error'])){

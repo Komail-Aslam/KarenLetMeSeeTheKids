@@ -27,7 +27,7 @@
 		</div>
 
 		<?php
-			echo "<t style='padding-top: 50px'>Send to: $data->first_name $data->last_name</t>";
+			echo "<h2 style='padding-top: 50px'>Send to: $data->first_name $data->last_name</h2>";
 		?>
 
 		<form action="" method="post">
