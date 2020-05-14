@@ -75,11 +75,12 @@
 							}
 						}
 						echo "</td>
-						<td class='home'><input class='smallButton' type='submit' name='$posts->post_id' value='Comment'></td></form></tr>";
+						<td class='home'><input class='smallButton' type='submit' name='$posts->post_id' value='Comment'></td></tr>";
 
 				}
 			}
 		?>
+		</form>
 		</table>
 	</div>
 	</body>
